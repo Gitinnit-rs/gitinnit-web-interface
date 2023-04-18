@@ -18,9 +18,14 @@
       </button>
     </div>
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl">Gitinnit</a>
+      <NuxtLink to="/" role="button" class="btn btn-ghost normal-case text-xl"
+        >Gitinnit</NuxtLink
+      >
     </div>
     <div class="flex-none gap-2">
+      <NuxtLink to="/upload" role="button" class="btn btn-sm btn-secondary">
+        Upload
+      </NuxtLink>
       <div class="form-control">
         <input type="text" placeholder="Search" class="input input-bordered" />
       </div>

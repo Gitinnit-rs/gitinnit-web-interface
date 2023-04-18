@@ -5,7 +5,7 @@ export default defineConfig({
     theme: {
         extend: {
             fontSize: {
-                'xss': '0.5rem',
+                'xss': '0.6rem',
             }
         }
     }
