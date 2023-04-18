@@ -2,7 +2,7 @@
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
 
-const imageUrl = randomImage();
+const previewURL = ref("");
 
 useHead({
   title: "Upload",
@@ -22,6 +22,11 @@ async function submit(e: Event | SubmitEvent) {
   }
 
   // Note: Full data is FormData + data reactive object
+}
+
+function onImageChange(e: any) {
+  const file = e.target.files[0];
+  previewURL.value = URL.createObjectURL(file);
 }
 </script>
 
@@ -77,6 +82,7 @@ async function submit(e: Event | SubmitEvent) {
             id="music_file"
             name="music_file"
             class="file-input file-input-bordered w-full max-w-xs"
+            accept="audio/*"
           />
         </div>
         <div class="form-control">
@@ -89,6 +95,8 @@ async function submit(e: Event | SubmitEvent) {
             id="image_file"
             name="image_file"
             class="file-input file-input-bordered w-full max-w-xs"
+            accept="image/*"
+            @change="onImageChange"
           />
         </div>
       </div>
@@ -115,7 +123,14 @@ async function submit(e: Event | SubmitEvent) {
     </form>
     <div>
       <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_Ufk5pON5I9UyQcWYdvFZj_dxZaDITOQ3w&usqp=CAU" -->
-      <img :src="imageUrl" class="max-w-sm w-xs rounded-lg shadow-2xl" />
+      <img
+        :src="previewURL"
+        class="w-xs h-xs rounded-lg shadow-2xl object-contain border"
+        v-if="previewURL"
+      />
+      <div v-else class="w-xs h-xs bg-base-200 rounded-lg grid place-items-center">
+        <p class="text-sm text-gray-500">Image Preview</p>
+      </div>
     </div>
   </section>
 </template>
