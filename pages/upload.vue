@@ -31,6 +31,9 @@ function onImageChange(e: any) {
 
 async function searchUserByName(e: Event | InputEvent) {
   const name = (e.target as HTMLInputElement).value;
+
+  if (!name) return;
+
   const result = await getUsersByName(name);
   if (result) console.log("User search by name results", result.data);
 }
