@@ -135,7 +135,7 @@ async function searchUserByName(e: Event | InputEvent) {
       <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_Ufk5pON5I9UyQcWYdvFZj_dxZaDITOQ3w&usqp=CAU" -->
       <img
         :src="previewURL"
-        class="w-xs h-xs rounded-lg shadow-2xl object-contain border"
+        class="w-xs h-xs rounded-lg shadow-2xl object-cover border"
         v-if="previewURL"
       />
       <div
