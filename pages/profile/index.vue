@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+useHead({
+    title: "Profile"
+})
+</script>
 <template>
   <section>
     <div class="hero py-10 bg-base-200">

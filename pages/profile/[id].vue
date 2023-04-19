@@ -6,14 +6,31 @@ const route = useRoute();
 const id = route.params.id;
 // 1ab2ed3d-f15b-4ea8-b03e-2e3bb42716cb
 
-const { data: user, pending, error } = useFetch(BASE_URL + "/user/" + id);
+const {
+  data: user,
+  pending,
+  error,
+} = useFetch<any[]>(BASE_URL + "/user/" + id);
+const {
+  data: music,
+  pending: pendingMusic,
+  error: errorMusic,
+} = useFetch<any[]>(BASE_URL + "/music?owner_id=" + id);
+
+useHead({
+  title: user.value ? user.value[0].name : "User",
+});
+
+console.log({ music: music.value });
 </script>
 <template>
   <section v-if="!id" class="p-10">
     <h1>Profile with id {{ id }} not found</h1>
   </section>
-  <section v-else-if="pending && !user">Loading...</section>
-  <section v-else-if="error && !user" class="p-10">
+  <section v-else-if="(pending || pendingMusic) && !user && !music">
+    Loading...
+  </section>
+  <section v-else-if="(error || errorMusic) && !user && !music" class="p-10">
     <div class="alert alert-error shadow-lg">
       <div>
         <svg
@@ -30,12 +47,13 @@ const { data: user, pending, error } = useFetch(BASE_URL + "/user/" + id);
           />
         </svg>
         <span>
-          An error occurred while fetching user details<br />{{ error }}</span
+          An error occurred while fetching user details<br />{{ error }} |
+          {{ errorMusic }}</span
         >
       </div>
     </div>
   </section>
-  <section v-else>
+  <section v-else-if="user">
     <div class="hero py-10 bg-base-200">
       <div class="hero-content text-center">
         <div class="max-w-md">
@@ -57,8 +75,14 @@ const { data: user, pending, error } = useFetch(BASE_URL + "/user/" + id);
 
       <!-- List of Music Items -->
       <div class="mt-6 w-1/2">
-        <MusicItem v-for="n in 5" :key="n" />
+        <p v-if="!music || music.length === 0">No music yet.</p>
+        <template v-else>
+          <MusicItem v-for="n in 5" :key="n" />
+          {{ music }}
+        </template>
       </div>
+
+      {{ music }}
     </div>
   </section>
 </template>
