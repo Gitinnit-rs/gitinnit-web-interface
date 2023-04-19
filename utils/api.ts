@@ -2,13 +2,15 @@ import { BASE_URL } from "~/constants";
 
 export function getUsersByName(name: string) {
   const { data, error, pending, refresh } = useLazyFetch(
-    BASE_URL + "/user/name/" + name
+    BASE_URL + "/user/name/" + name,
   );
-  if (error)
+  if (error !== null) {
+    console.log(error);
     throw new Error(
       `Error while fetching user by name "${name}": `,
-      error.value?.message as any
+      error.value as any,
     );
+  }
 
   console.log("Data in api call", data);
 
