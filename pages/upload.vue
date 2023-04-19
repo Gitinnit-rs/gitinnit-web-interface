@@ -29,11 +29,10 @@ function onImageChange(e: any) {
   previewURL.value = URL.createObjectURL(file);
 }
 
-function searchUserByName(e: Event | InputEvent) {
-  console.log("Called");
+async function searchUserByName(e: Event | InputEvent) {
   const name = (e.target as HTMLInputElement).value;
-  const { data } = getUsersByName(name);
-  console.log("User search by name results", data);
+  const result = await getUsersByName(name);
+  if (result) console.log("User search by name results", result.data);
 }
 </script>
 
@@ -73,7 +72,7 @@ function searchUserByName(e: Event | InputEvent) {
               name="artists"
               placeholder="Darude, Drake"
               class="input input-bordered"
-              @change="searchUserByName"
+              @input="searchUserByName"
             />
           </label>
         </div>

@@ -1,18 +1,26 @@
+import axios from "axios";
+import { useDebounceFn } from "@vueuse/core";
+
 import { BASE_URL } from "~/constants";
 
-export function getUsersByName(name: string) {
-  const { data, error, pending, refresh } = useLazyFetch(
-    BASE_URL + "/user/name/" + name,
+export const getUsersByName = useDebounceFn(async (name: string) => {
+  const { data, status, statusText } = await axios(
+    BASE_URL + "/user/name/" + name
   );
-  if (error !== null) {
-    console.log(error);
-    throw new Error(
+
+  if (status !== 200) {
+    console.log(
       `Error while fetching user by name "${name}": `,
-      error.value as any,
+      status,
+      statusText
+    );
+    throw new Error(
+      `Error while fetching user by name "${name}": ` +
+        status +
+        " " +
+        statusText
     );
   }
 
-  console.log("Data in api call", data);
-
-  return { data, pending, refresh };
-}
+  return { data };
+}, 1000);
