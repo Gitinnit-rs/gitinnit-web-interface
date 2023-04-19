@@ -1,4 +1,9 @@
 <script setup lang="ts">
+
+useHead({
+  title: "Dashboard"
+})
+
 const communityProjects = [
   {
     id: 0,
@@ -37,13 +42,9 @@ const communityProjects = [
     tags: [],
   },
 ];
-
-function randomImage() {
-  return `https://picsum.photos/id/${Math.floor(Math.random() * 100)}/400/400`;
-}
 </script>
 <template>
-  <div>
+  <div class="bg-base-300">
     <!-- Hero Section -->
     <section class="hero p-5 bg-base-300">
       <div class="hero-content flex-col lg:flex-row space-x-5">
@@ -59,7 +60,7 @@ function randomImage() {
       </div>
     </section>
 
-    <section class="bg-base-100 p-10">
+    <section class="bg-base-100 p-10 rounded-t-4xl">
       <h1 class="uppercase tracking-widest text-xs text-gray-500">
         Community Projects
       </h1>
