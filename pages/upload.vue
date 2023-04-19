@@ -28,6 +28,13 @@ function onImageChange(e: any) {
   const file = e.target.files[0];
   previewURL.value = URL.createObjectURL(file);
 }
+
+function searchUserByName(e: Event | InputEvent) {
+  console.log("Called");
+  const name = (e.target as HTMLInputElement).value;
+  const { data } = getUsersByName(name);
+  console.log("User search by name results", data);
+}
 </script>
 
 <template>
@@ -66,6 +73,7 @@ function onImageChange(e: any) {
               name="artists"
               placeholder="Darude, Drake"
               class="input input-bordered"
+              @change="searchUserByName"
             />
           </label>
         </div>
@@ -128,7 +136,10 @@ function onImageChange(e: any) {
         class="w-xs h-xs rounded-lg shadow-2xl object-contain border"
         v-if="previewURL"
       />
-      <div v-else class="w-xs h-xs bg-base-200 rounded-lg grid place-items-center">
+      <div
+        v-else
+        class="w-xs h-xs bg-base-200 rounded-lg grid place-items-center"
+      >
         <p class="text-sm text-gray-500">Image Preview</p>
       </div>
     </div>
