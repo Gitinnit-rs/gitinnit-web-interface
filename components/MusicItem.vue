@@ -17,7 +17,15 @@ defineProps<{
       />
       <div class="py-1">
         <h1 class="text-3xl font-bold">{{ music.name }}</h1>
-        <p>{{ music.artists.map((item) => item.name).join(", ") }}</p>
+        <p>
+          <span v-for="(artist, i) in music.artists" :key="artist.id">
+            <NuxtLink
+              :to="'/profile/' + artist.id"
+              class="hover:text-pink-600 cursor-pointer transition"
+              >{{ artist.name }}</NuxtLink
+            ><span v-if="i !== music.artists.length - 1">, </span></span
+          >
+        </p>
       </div>
     </div>
 

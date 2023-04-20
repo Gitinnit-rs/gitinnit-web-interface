@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 useHead({
-    title: "Profile"
-})
+  title: "Profile",
+});
 </script>
 <template>
   <section>
@@ -26,7 +26,7 @@ useHead({
 
       <!-- List of Music Items -->
       <div class="mt-6 w-1/2">
-        <MusicItem v-for="n in 5" :key="n" />
+        <!-- <MusicItem v-for="n in 5" :key="n" /> -->
       </div>
     </div>
   </section>
