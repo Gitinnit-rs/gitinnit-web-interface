@@ -4,10 +4,14 @@ import { Music } from "~/types";
 defineProps<{
   music: Music;
 }>();
+
+const router = useRouter()
+
 </script>
 <template>
   <div
     class="w-full hover:bg-gray-100 rounded-xl cursor-pointer transition p-2 py-3 flex items-center justify-between"
+    @click="router.push("/music/" + music.id)"
   >
     <div class="flex items-center space-x-8">
       <img
