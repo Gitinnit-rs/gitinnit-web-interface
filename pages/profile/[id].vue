@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { BASE_URL } from "~/constants";
+import { Music } from "~/types";
 
 const route = useRoute();
 
@@ -15,7 +16,7 @@ const {
   data: music,
   pending: pendingMusic,
   error: errorMusic,
-} = useFetch<any[]>(BASE_URL + "/music?owner_id=" + id);
+} = useFetch<Music[]>(BASE_URL + "/music?owner_id=" + id);
 
 useHead({
   title: user.value ? user.value[0].name : "User",
@@ -77,12 +78,9 @@ console.log({ music: music.value });
       <div class="mt-6 w-1/2">
         <p v-if="!music || music.length === 0">No music yet.</p>
         <template v-else>
-          <MusicItem v-for="n in 5" :key="n" />
-          {{ music }}
+          <MusicItem v-for="m in music" :key="m.id" :music="m" />
         </template>
       </div>
-
-      {{ music }}
     </div>
   </section>
 </template>

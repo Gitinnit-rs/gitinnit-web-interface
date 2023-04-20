@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { Music } from "~/types";
+
+defineProps<{
+  music: Music;
+}>();
+</script>
 <template>
   <div
     class="w-full hover:bg-gray-100 rounded-xl cursor-pointer transition p-2 py-3 flex items-center justify-between"
@@ -10,8 +16,8 @@
         alt="Gitinnit User's Profile Image"
       />
       <div class="py-1">
-        <h1 class="text-3xl font-bold">Animals</h1>
-        <p>Martin Garrix, Tiesto</p>
+        <h1 class="text-3xl font-bold">{{ music.name }}</h1>
+        <p>{{ music.artists.map((item) => item.name).join(", ") }}</p>
       </div>
     </div>
 
