@@ -2,9 +2,13 @@ export interface Music {
   id: string;
   name: string;
   release_date: string;
+  tags: string[],
+  genre: string[],
   like_count: number;
-  file: string;
+  music_url: string;
+  cover_url: string;
   owner_id: string;
+
   artists: Artist[];
 }
 
