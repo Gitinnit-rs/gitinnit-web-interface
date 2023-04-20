@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import AudioPlayer from './components/AudioPlayer.vue';
+
 useHead({
   titleTemplate: "%s - Gitinnit",
 });
@@ -9,6 +11,7 @@ useHead({
     <!-- <Sidebar /> -->
     <Navbar />
     <NuxtPage />
+    <AudioPlayer />
   </div>
 </template>
 

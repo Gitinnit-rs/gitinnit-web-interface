@@ -28,7 +28,7 @@ useHead({
       />
       <div>
         <h1 class="text-4xl font-bold">{{ music[0].name }}</h1>
-        <p>
+        <p class="mt-1">
           <span v-for="(artist, i) in music[0].artists" :key="artist.id">
             <NuxtLink
               :to="'/profile/' + artist.id"
