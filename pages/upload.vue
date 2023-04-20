@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { useAnimate } from "@vueuse/core";
+import { Transition } from "vue";
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
 
 const previewURL = ref("");
+const previewImage = ref(null as HTMLImageElement | null);
 
 useHead({
   title: "Upload",
@@ -27,6 +30,11 @@ async function submit(e: Event | SubmitEvent) {
 function onImageChange(e: any) {
   const file = e.target.files[0];
   previewURL.value = URL.createObjectURL(file);
+
+  // Animation
+  if (previewImage.value) {
+    useAnimate(previewImage.value, [{ opacity: 0 }, { opacity: 1 }], 1000);
+  }
 }
 
 async function searchUserByName(e: Event | InputEvent) {
@@ -131,9 +139,10 @@ async function searchUserByName(e: Event | InputEvent) {
 
       <button type="submit" class="btn btn-secondary">Create Music</button>
     </form>
-    <div>
+    <Transition name="fade" mode="out-in">
       <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_Ufk5pON5I9UyQcWYdvFZj_dxZaDITOQ3w&usqp=CAU" -->
       <img
+        ref="previewImage"
         :src="previewURL"
         class="w-xs h-xs rounded-lg shadow-2xl object-cover border"
         v-if="previewURL"
@@ -144,6 +153,6 @@ async function searchUserByName(e: Event | InputEvent) {
       >
         <p class="text-sm text-gray-500">Image Preview</p>
       </div>
-    </div>
+    </Transition>
   </section>
 </template>

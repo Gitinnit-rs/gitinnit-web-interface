@@ -11,3 +11,7 @@ useHead({
     <NuxtPage />
   </div>
 </template>
+
+<style>
+@import url("@/assets/style.css");
+</style>
