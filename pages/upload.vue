@@ -29,11 +29,17 @@ async function submit(e: Event | SubmitEvent) {
 
 function onImageChange(e: any) {
   const file = e.target.files[0];
-  previewURL.value = URL.createObjectURL(file);
 
   // Animation
   if (previewImage.value) {
-    useAnimate(previewImage.value, [{ opacity: 0 }, { opacity: 1 }], 1000);
+    useAnimate(
+      previewImage.value,
+      [{ opacity: 1 }, { opacity: 0 }, { opacity: 0 }, { opacity: 1 }],
+      1000
+    );
+    setTimeout(() => (previewURL.value = URL.createObjectURL(file)), 510);
+  } else {
+    previewURL.value = URL.createObjectURL(file);
   }
 }
 
