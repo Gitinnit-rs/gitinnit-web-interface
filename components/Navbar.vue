@@ -1,3 +1,10 @@
+<script lang="ts" setup>
+import { AUTH_URL } from "~/constants";
+let returnURL=`http://localhost:3000/authCallback`
+const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
+// console.log(redirectURL);
+</script>
+
 <template>
   <nav class="navbar bg-base-300">
     <div class="flex-none">
@@ -48,6 +55,11 @@
             </NuxtLink>
           </li>
           <li><a>Settings</a></li>
+          <li>
+            <a :href=redirectURL  class="justify-between">
+              Login
+            </a>
+          </li>
           <li><a>Logout</a></li>
         </ul>
       </div>
