@@ -1,6 +1,14 @@
 <script lang="ts" setup>
 import { AUTH_URL } from "~/constants";
-let returnURL=`http://localhost:3000/authCallback`
+import { useUserStore } from "~/store/user.store";
+
+const { user } = useUserStore();
+let loggedIn: boolean = true;
+if (!user || !user.access_token) {
+  loggedIn = false;
+}
+
+let returnURL = `http://localhost:3000/authCallback`;
 const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
 // console.log(redirectURL);
 </script>
@@ -55,12 +63,13 @@ const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
             </NuxtLink>
           </li>
           <li><a>Settings</a></li>
-          <li>
-            <a :href=redirectURL  class="justify-between">
-              Login
-            </a>
+
+          <li v-if="{ loggedIn }">
+            <a href="" class="justify-between"> Logout </a>
           </li>
-          <li><a>Logout</a></li>
+          <li v-else>
+            <a :href="redirectURL" class="justify-between"> Login </a>
+          </li>
         </ul>
       </div>
     </div>
