@@ -1,12 +1,15 @@
 <script lang="ts" setup>
+import { storeToRefs } from "pinia";
 import { AUTH_URL } from "~/constants";
 import { useUserStore } from "~/store/user.store";
+import { signOut } from "~/utils/auth";
 
-const { user } = useUserStore();
-let loggedIn: boolean = true;
-if (!user || !user.access_token) {
-  loggedIn = false;
-}
+const store = useUserStore();
+const { user } = storeToRefs(store);
+
+const loggedIn = computed(() => {
+  return user.value && user.value.access_token;
+});
 
 let returnURL = `http://localhost:3000/authCallback`;
 const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
@@ -64,8 +67,15 @@ const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
           </li>
           <li><a>Settings</a></li>
 
-          <li v-if="{ loggedIn }">
-            <a href="" class="justify-between"> Logout </a>
+          <li v-if="loggedIn">
+            <NuxtLink
+              to="/"
+              event=""
+              @click.native="signOut()"
+              class="justify-between"
+            >
+              Logout
+            </NuxtLink>
           </li>
           <li v-else>
             <a :href="redirectURL" class="justify-between"> Login </a>
