@@ -6,7 +6,7 @@ interface IUserStore {
 
 export const useUserStore = defineStore("user", {
   state: (): IUserStore => ({
-    user: null,
+    user: {},
   }),
   actions: {
     setUser(user: any) {

@@ -34,7 +34,7 @@ async function init() {
 
     // await updateGlobalConfig("user", user);
 
-    router.push("/settings");
+    router.push("/");
 
     // isLoading.value = false;
   } catch (e) {
