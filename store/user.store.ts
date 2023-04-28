@@ -17,5 +17,10 @@ export const useUserStore = defineStore("user", {
         this.user.access_token = access_token;
       }
     },
+    updateUserId(userId: string) {
+      if (this.user) {
+        this.user.id = userId;
+      }
+    },
   },
 });
