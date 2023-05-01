@@ -1,6 +1,6 @@
 export type MusicMetaData = {
   name: string;
-  owner_id: string;
+  artist_id: string;
 };
 
 export type Music = {

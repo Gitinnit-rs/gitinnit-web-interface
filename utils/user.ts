@@ -48,7 +48,7 @@ export async function getUserDetails(initial_access_token?: string) {
         username: data.login,
         bio: data.bio,
         profile_photo: data.avatar_url,
-      }
+      },
     );
     if (create_status !== 200)
       throw new Error("Got invalid status code " + status);

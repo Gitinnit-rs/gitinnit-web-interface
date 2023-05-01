@@ -16,7 +16,7 @@ const {
   data: music,
   pending: pendingMusic,
   error: errorMusic,
-} = useFetch<Music[]>(BASE_URL + "/music?owner_id=" + id);
+} = useFetch<Music[]>(BASE_URL + "/music?artist_id=" + id);
 
 useHead({
   title: user.value ? user.value[0].name : "User",
