@@ -3,6 +3,9 @@ import { useAnimate } from "@vueuse/core";
 import { Transition } from "vue";
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
+import Multiselect from "vue-multiselect";
+import { BASE_URL } from "../constants";
+import axios from "axios";
 
 const previewURL = ref("");
 const previewImage = ref(null as HTMLImageElement | null);
@@ -18,11 +21,31 @@ const data = reactive({
 
 async function submit(e: Event | SubmitEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
-
+  let artists = formData.get("artists") as string;
+  let artists_list: string[] = artists
+    .split(",")
+    .map((artist: string) => artist.trim());
   // Testing
   for (const [key, val] of formData.entries()) {
     console.log(`${key}: ${val}`);
   }
+  console.log("Data", data);
+
+  const data_object = {
+    name: formData.get("name"),
+    artists: artists_list,
+    tags: data.tags,
+    music_file: formData.get("music_file"),
+    image_file: formData.get("image_file"),
+  };
+
+  const url = BASE_URL + "/music/";
+  const res = await axios.post(url, data_object, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log("Response", res.data);
 
   // Note: Full data is FormData + data reactive object
 }
