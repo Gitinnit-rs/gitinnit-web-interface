@@ -135,7 +135,8 @@ const seek = (e: MouseEvent) => {
 
 <template>
   <div
-    class="fixed bottom-3 left-[45%] md:left-[46%] text-white z-50 select-none"
+    class="fixed bottom-3 text-white z-50 select-none"
+    style="left: 50%; transform: translateX(-50%)"
   >
     <transition name="pushup" mode="out-in">
       <div
