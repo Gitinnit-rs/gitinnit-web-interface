@@ -16,7 +16,9 @@ const isMuted = ref(false);
 
 // Audio Player
 const audioPlayer: Ref<HTMLAudioElement | null> = ref(null);
-const src = ref("");
+const src = ref(
+  "https://mrbjldqyfbpdayfaucuu.supabase.co/storage/v1/object/public/music/f1ce894d-ef04-47df-bfcd-5d5812fcb3b4/430969b0-f866-422d-8104-27065cba9b30"
+);
 
 // Audio Player TimingStates
 const currentTime = ref("00:00");
@@ -27,7 +29,22 @@ const percentage = ref(0);
 onMounted(() => {
   // Attach event listeners
   attachListeners();
+
+  loadMusic();
 });
+
+const loadMusic = () => {
+  if (!audioPlayer.value) return;
+
+  audioPlayer.value.volume = 1;
+  audioPlayer.value.currentTime = 0;
+  audioPlayer.value.load();
+  audioPlayer.value.pause();
+
+  totalTime.value = audioPlayer.value.duration.toString();
+};
+
+// Add a watcher for src then call loadMusic again
 
 const play = () => {
   audioPlayer.value?.play();
@@ -91,7 +108,15 @@ const attachListeners = () => {
     updateTime();
 
     // Currently only setting if needed to clear later, but fine running in background
-    interval.value = setInterval(updateTime, 100);
+    interval.value = setInterval(updateTime, 10);
+  };
+
+  audioPlayer.value.onended = function () {
+    clearInterval(interval.value);
+  };
+
+  audioPlayer.value.onpause = function () {
+    clearInterval(interval.value);
   };
 };
 
