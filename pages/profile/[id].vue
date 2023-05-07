@@ -18,6 +18,8 @@ const {
   error: errorMusic,
 } = useFetch<Music[]>(BASE_URL + "/music?artist_id=" + id);
 
+console.log({ music });
+
 useHead({
   title: user.value ? user.value[0].name : "User",
 });

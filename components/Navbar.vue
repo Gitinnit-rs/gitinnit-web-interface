@@ -71,7 +71,7 @@ const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
             </NuxtLink>
           </li>
           <li>
-            <NuxtLink to="/profile">
+            <NuxtLink to="/album/create">
               <span><PlusIcon /></span>
               <span> New Album </span>
             </NuxtLink>

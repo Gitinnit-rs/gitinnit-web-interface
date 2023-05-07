@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useAnimate } from "@vueuse/core";
 import { Transition } from "vue";
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
@@ -46,19 +45,7 @@ async function submit(e: Event | SubmitEvent) {
 }
 
 function onImageChange(e: any) {
-  const file = e.target.files[0];
-
-  // Animation
-  if (previewImage.value) {
-    useAnimate(
-      previewImage.value,
-      [{ opacity: 1 }, { opacity: 0 }, { opacity: 0 }, { opacity: 1 }],
-      1000
-    );
-    setTimeout(() => (previewURL.value = URL.createObjectURL(file)), 510);
-  } else {
-    previewURL.value = URL.createObjectURL(file);
-  }
+  animateImageChange(e, previewURL, previewImage);
 }
 
 async function searchUserByName(e: Event | InputEvent) {
@@ -185,7 +172,6 @@ async function findArtists(query: string) {
       <button type="submit" class="btn btn-secondary">Create Music</button>
     </form>
     <Transition name="fade" mode="out-in">
-      <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_Ufk5pON5I9UyQcWYdvFZj_dxZaDITOQ3w&usqp=CAU" -->
       <img
         ref="previewImage"
         :src="previewURL"
