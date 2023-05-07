@@ -4,12 +4,30 @@ import { Transition } from "vue";
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
 
-const previewURL = ref("");
-const previewImage = ref(null as HTMLImageElement | null);
+import VueMultiSelect from "vue-multiselect";
 
 useHead({
   title: "Upload",
 });
+
+const previewURL = ref("");
+const previewImage = ref(null as HTMLImageElement | null);
+
+const artistList = ref([
+  {
+    id: 1,
+    name: "Martin Garrix",
+  },
+  {
+    id: 2,
+    name: "Alkibiadez",
+  },
+  {
+    id: 3,
+    name: "KSHMR",
+  },
+]);
+const selectedArtistsList = ref([]);
 
 const data = reactive({
   tags: [] as string[],
@@ -51,12 +69,33 @@ async function searchUserByName(e: Event | InputEvent) {
   const result = await getUsersByName(name);
   if (result) console.log("User search by name results", result.data);
 }
+
+async function findArtists(query: string) {
+  // Update artistList based on query
+}
 </script>
 
 <template>
   <section class="bg-base-300 p-10 pt-20">
     <h1 class="text-4xl font-bold">Upload</h1>
   </section>
+
+  <div class="w-1/2 p-10">
+    <p>Test Multiselect:</p>
+    <VueMultiSelect
+      class="multiselect"
+      label="name"
+      track-by="id"
+      :multiple="true"
+      v-model="selectedArtistsList"
+      :options="artistList"
+      @search-change="findArtists"
+    >
+      <template #noResult> Oops! No artists found. </template>
+    </VueMultiSelect>
+
+    <p class="mt-5">Selected: {{ selectedArtistsList }}</p>
+  </div>
 
   <!-- Upload Form Section -->
   <section class="p-10 space-y-10 md:(grid grid-cols-3 space-y-0)">

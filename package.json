@@ -21,6 +21,7 @@
     "dotenv": "^16.0.3",
     "pinia": "^2.0.35",
     "vue-material-design-icons": "^5.2.0",
+    "vue-multiselect": "^3.0.0-beta.1",
     "vue3-tags-input": "^1.0.7"
   }
 }
