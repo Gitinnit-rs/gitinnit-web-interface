@@ -65,7 +65,7 @@ const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
           class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <NuxtLink to="/profile">
+            <NuxtLink to="/user">
               <span><AccountIcon /></span>
               <span> Profile </span>
             </NuxtLink>
