@@ -80,6 +80,11 @@ async function searchUserByName(e: Event | InputEvent) {
 }
 
 async function findArtists(query: string) {
+  if (query === "") {
+    query = "*";
+  }
+  const result = await getUsersByName(query);
+  artistList.value = result.data;
   // Update artistList based on query
 }
 </script>
