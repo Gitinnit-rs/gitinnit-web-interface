@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { Music, MusicDisplayItemInterface } from "@/types";
 import { useDebounceFn } from "@vueuse/core";
+import { useUserStore } from "~/store/user.store";
+
 import axios from "axios";
 
 // Icons
@@ -29,12 +31,22 @@ onMounted(() => {
 });
 
 async function submit(e: Event | SubmitEvent) {
+  let user = useUserStore();
   const formData = new FormData(e.target as HTMLFormElement);
 
-  // Testing
-  for (const [key, val] of formData.entries()) {
-    console.log(`${key}: ${val}`);
-  }
+  const data_object = {
+    name: formData.get("name"),
+    image_file: formData.get("image_file"),
+    access_token: user.$state.user.access_token,
+    musics: selectedMusicList,
+  };
+  const url = BASE_URL + "/music/album/";
+  const res = await axios.post(url, data_object, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log("Response", res.data);
 }
 
 // const findMusic = useDebounceFn(async () => {}, 100);

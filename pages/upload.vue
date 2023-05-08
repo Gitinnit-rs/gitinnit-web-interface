@@ -4,6 +4,8 @@ import { Transition } from "vue";
 import Vue3TagsInput from "vue3-tags-input";
 
 import VueMultiSelect from "vue-multiselect";
+import { useUserStore } from "~/store/user.store";
+
 import axios from "axios";
 
 import { BASE_URL } from "../constants";
@@ -38,23 +40,17 @@ const data = reactive({
 
 async function submit(e: Event | SubmitEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
+  let user = useUserStore();
 
   let artists = formData.get("artists") as string;
   let artists_list: string[] = artists
     .split(",")
     .map((artist: string) => artist.trim());
 
-  // Testing
-  // @ts-ignore
-  for (const [key, val] of formData.entries()) {
-    console.log(`${key}: ${val}`);
-  }
-
-  console.log("Data", data);
   const data_object = {
     name: formData.get("name"),
     artists: artists_list,
-    artist_id: 123213,
+    access_token: user.$state.user.access_token,
     tags: data.tags,
     music_file: formData.get("music_file"),
     image_file: formData.get("image_file"),
