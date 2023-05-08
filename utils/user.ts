@@ -30,7 +30,7 @@ export async function getUserDetails(initial_access_token?: string) {
   updateAccessToken(access_token);
 
   //check if user exists in db
-  const url = BASE_URL + "/user/" + data.id;
+  const url = BASE_URL + "/user/?id=" + data.id;
   //get user details from supabase if user exists
   const { data: user_data, status: user_status } = await axios.get(url);
 
