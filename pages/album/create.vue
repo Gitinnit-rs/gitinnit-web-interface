@@ -1,9 +1,13 @@
 <script lang="ts" setup>
-import { MusicDisplayItemInterface } from "@/types";
+import { Music, MusicDisplayItemInterface } from "@/types";
 import { useDebounceFn } from "@vueuse/core";
+import axios from "axios";
 
 // Icons
-import DeleteIcon from "vue-material-design-icons/Delete.vue";
+import MinusIcon from "vue-material-design-icons/MinusCircle.vue";
+import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
+
+import { BASE_URL } from "~/constants";
 
 useHead({
   title: "New Album",
@@ -15,29 +19,14 @@ const previewImage = ref(null as HTMLImageElement | null);
 // Data
 const name = ref("");
 
-// Search Music
-const query = ref("");
-const musicList = ref([
-  {
-    id: 1,
-    name: "Animals",
-    cover_url: "",
-    artists: ["Martin Garrix"],
-  },
-  {
-    id: 2,
-    name: "Lion in the field",
-    cover_url: "",
-    artists: ["KSHMR"],
-  },
-  {
-    id: 3,
-    name: "GDFR",
-    cover_url: "",
-    artists: ["Florida"],
-  },
-] as MusicDisplayItemInterface[]);
-const selectedMusicList = ref([]);
+// Search/Select Music
+// const query = ref("");
+const musicList = ref([] as Music[]);
+const selectedMusicList: typeof musicList = ref([]);
+
+onMounted(() => {
+  fetchMusic();
+});
 
 async function submit(e: Event | SubmitEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
@@ -48,10 +37,34 @@ async function submit(e: Event | SubmitEvent) {
   }
 }
 
-const findMusic = useDebounceFn(async () => {}, 100);
+// const findMusic = useDebounceFn(async () => {}, 100);
+
+async function fetchMusic() {
+  // Move this later to utils/music.ts
+
+  const { data, status } = await axios(BASE_URL + "/music?artist_id=123213");
+
+  if (status !== 200) {
+    console.error("Error while fetching user's music");
+  }
+
+  console.log("Music Data", data);
+
+  musicList.value = data;
+}
 
 function onImageChange(e: any) {
   animateImageChange(e, previewURL, previewImage);
+}
+
+function addToList(music: any) {
+  if (selectedMusicList.value.includes(music)) return;
+
+  selectedMusicList.value.push(music);
+}
+
+function removeFromList(music: any) {
+  selectedMusicList.value.splice(selectedMusicList.value.indexOf(music), 1);
 }
 </script>
 
@@ -103,7 +116,7 @@ function onImageChange(e: any) {
           Select your music to include in the album
         </h1>
 
-        <input
+        <!-- <input
           type="text"
           placeholder="Select your music"
           id="name"
@@ -111,7 +124,28 @@ function onImageChange(e: any) {
           class="mt-3 w-full md:w-1/2 input input-bordered"
           v-model="query"
           @input="findMusic"
-        />
+        /> -->
+
+        <div class="mt-4">
+          <p class="text-gray-400" v-if="musicList.length === 0">
+            No music found.
+            <NuxtLink to="/upload" class="link"> Upload some!</NuxtLink>
+          </p>
+
+          <MusicDisplayItem
+            v-for="music in musicList"
+            :key="music.id"
+            :music="music"
+            class="md:w-1/2"
+          >
+            <template #actions>
+              <PlusIcon
+                class="text-green-600 hover:text-green-500 transition cursor-pointer"
+                @click="addToList(music)"
+              />
+            </template>
+          </MusicDisplayItem>
+        </div>
       </div>
     </div>
     <div class="col-span-1">
@@ -143,15 +177,15 @@ function onImageChange(e: any) {
       <!-- Selected Music List -->
       <div class="mt-5">
         <MusicDisplayItem
-          v-for="music in musicList"
+          v-for="music in selectedMusicList"
           :key="music.id"
           :music="music"
-          class="group"
         >
           <template #actions>
-            <div class="hidden group-hover:block">
-              <DeleteIcon class="text-red-400" />
-            </div>
+            <MinusIcon
+              @click="removeFromList(music)"
+              class="text-red-600 hover:text-red-500 transition cursor-pointer"
+            />
           </template>
         </MusicDisplayItem>
       </div>
