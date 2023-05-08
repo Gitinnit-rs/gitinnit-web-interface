@@ -4,6 +4,9 @@ import { Transition } from "vue";
 import Vue3TagsInput from "vue3-tags-input";
 
 import VueMultiSelect from "vue-multiselect";
+import axios from "axios";
+
+import { BASE_URL } from "../constants";
 
 useHead({
   title: "Upload",
@@ -36,10 +39,33 @@ const data = reactive({
 async function submit(e: Event | SubmitEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
 
+  let artists = formData.get("artists") as string;
+  let artists_list: string[] = artists
+    .split(",")
+    .map((artist: string) => artist.trim());
+
   // Testing
+  // @ts-ignore
   for (const [key, val] of formData.entries()) {
     console.log(`${key}: ${val}`);
   }
+
+  console.log("Data", data);
+  const data_object = {
+    name: formData.get("name"),
+    artists: artists_list,
+    artist_id: 123213,
+    tags: data.tags,
+    music_file: formData.get("music_file"),
+    image_file: formData.get("image_file"),
+  };
+  const url = BASE_URL + "/music/";
+  const res = await axios.post(url, data_object, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log("Response", res.data);
 
   // Note: Full data is FormData + data reactive object
 }
