@@ -5,5 +5,9 @@ export default defineNuxtConfig({
       title: "App",
     },
   },
-  modules: ["nuxt-windicss", "@pinia/nuxt"],
+  modules: [
+    "nuxt-windicss",
+    "@pinia/nuxt",
+    "@pinia-plugin-persistedstate/nuxt",
+  ],
 });

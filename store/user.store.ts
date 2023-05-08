@@ -23,4 +23,7 @@ export const useUserStore = defineStore("user", {
       }
     },
   },
+  persist: {
+    storage: persistedState.localStorage,
+  },
 });
