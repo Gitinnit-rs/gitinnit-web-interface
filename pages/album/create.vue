@@ -1,6 +1,9 @@
 <script lang="ts" setup>
-import mockMusic from "@/json/mock_music.json";
 import { MusicDisplayItemInterface } from "@/types";
+import { useDebounceFn } from "@vueuse/core";
+
+// Icons
+import DeleteIcon from "vue-material-design-icons/Delete.vue";
 
 useHead({
   title: "New Album",
@@ -45,7 +48,7 @@ async function submit(e: Event | SubmitEvent) {
   }
 }
 
-async function findMusic() {}
+const findMusic = useDebounceFn(async () => {}, 100);
 
 function onImageChange(e: any) {
   animateImageChange(e, previewURL, previewImage);
@@ -97,12 +100,12 @@ function onImageChange(e: any) {
 
       <div class="mt-10">
         <h1 class="font-semibold text-xl">
-          Search for music to include in the album
+          Select your music to include in the album
         </h1>
 
         <input
           type="text"
-          placeholder="Select site music"
+          placeholder="Select your music"
           id="name"
           name="name"
           class="mt-3 w-full md:w-1/2 input input-bordered"
@@ -143,10 +146,13 @@ function onImageChange(e: any) {
           v-for="music in musicList"
           :key="music.id"
           :music="music"
+          class="group"
         >
-        <template #actions>
-            del
-        </template>
+          <template #actions>
+            <div class="hidden group-hover:block">
+              <DeleteIcon class="text-red-400" />
+            </div>
+          </template>
         </MusicDisplayItem>
       </div>
     </div>
