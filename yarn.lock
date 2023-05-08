@@ -4679,20 +4679,15 @@
   "resolved" "https://registry.npmjs.org/vue-devtools-stub/-/vue-devtools-stub-0.1.0.tgz"
   "version" "0.1.0"
 
-"vue-material-design-icons@^5.2.0":
-  "integrity" "sha512-fcdcJHQ9fQw2CAytuLAzWSELcxH138sCdMItVhvmO7Lu9afIgojB/UCWv7XHt/lURsnq/n6O+muM4AQgw8yfig=="
-  "resolved" "https://registry.npmjs.org/vue-material-design-icons/-/vue-material-design-icons-5.2.0.tgz"
-  "version" "5.2.0"
+vue-multiselect@^3.0.0-beta.1:
+  version "3.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/vue-multiselect/-/vue-multiselect-3.0.0-beta.1.tgz#f5c33677237fa9af0105f94783c3175330731e5a"
+  integrity sha512-V+jpydtjyHcQ+yjHsEWEBrDAopOx/pufNkSAXNVDAGQ+ESDEJ7wYejNd9H1RiCnFOYK4yf1XSGqE+Mp3HJXmdg==
 
-"vue-multiselect@^2.1.7":
-  "integrity" "sha512-KIegcN+Ntwg3cbkY/jhw2s/+XJUM0Lpi/LcKFYCS8PrZHcWBl2iKCVze7ZCnRj3w8H7/lUJ9v7rj9KQiNxApBw=="
-  "resolved" "https://registry.npmjs.org/vue-multiselect/-/vue-multiselect-2.1.7.tgz"
-  "version" "2.1.7"
-
-"vue-router@^4.1.6":
-  "integrity" "sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ=="
-  "resolved" "https://registry.npmjs.org/vue-router/-/vue-router-4.1.6.tgz"
-  "version" "4.1.6"
+vue-router@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.npmjs.org/vue-router/-/vue-router-4.1.6.tgz"
+  integrity sha512-DYWYwsG6xNPmLq/FmZn8Ip+qrhFEzA14EI12MsMgVxvHFDYvlr4NXpVF5hrRH1wVcDP8fGi5F4rxuJSl8/r+EQ==
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 

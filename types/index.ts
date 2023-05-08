@@ -16,3 +16,11 @@ export interface Artist {
   name: string;
   id: string;
 }
+
+export interface MusicDisplayItemInterface {
+  id: string | number;
+  name: string;
+  cover_url: string;
+
+  artists?: string[];
+}

@@ -4,6 +4,11 @@ import { AUTH_URL } from "~/constants";
 import { useUserStore } from "~/store/user.store";
 import { signOut } from "~/utils/auth";
 
+// Icons
+import AccountIcon from "vue-material-design-icons/Account.vue";
+import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
+import SettingsIcon from "vue-material-design-icons/Cog.vue";
+
 const store = useUserStore();
 const { user } = storeToRefs(store);
 
@@ -60,12 +65,23 @@ const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
           class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
         >
           <li>
-            <NuxtLink to="/profile" class="justify-between">
-              Profile
-              <span class="badge">New</span>
+            <NuxtLink to="/user">
+              <span><AccountIcon /></span>
+              <span> Profile </span>
             </NuxtLink>
           </li>
-          <li><a>Settings</a></li>
+          <li>
+            <NuxtLink to="/album/create">
+              <span><PlusIcon /></span>
+              <span> New Album </span>
+            </NuxtLink>
+          </li>
+          <li>
+            <NuxtLink to="/profile">
+              <span><SettingsIcon /></span>
+              <span> Settings </span>
+            </NuxtLink>
+          </li>
 
           <li v-if="loggedIn">
             <NuxtLink

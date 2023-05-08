@@ -1,18 +1,35 @@
 <script setup lang="ts">
-import { useAnimate } from "@vueuse/core";
 import { Transition } from "vue";
 // @ts-ignore
 import Vue3TagsInput from "vue3-tags-input";
-import Multiselect from "vue-multiselect";
-import { BASE_URL } from "../constants";
+
+import VueMultiSelect from "vue-multiselect";
 import axios from "axios";
 
-const previewURL = ref("");
-const previewImage = ref(null as HTMLImageElement | null);
+import { BASE_URL } from "../constants";
 
 useHead({
   title: "Upload",
 });
+
+const previewURL = ref("");
+const previewImage = ref(null as HTMLImageElement | null);
+
+const artistList = ref([
+  {
+    id: 1,
+    name: "Martin Garrix",
+  },
+  {
+    id: 2,
+    name: "Alkibiadez",
+  },
+  {
+    id: 3,
+    name: "KSHMR",
+  },
+]);
+const selectedArtistsList = ref([]);
 
 const data = reactive({
   tags: [] as string[],
@@ -21,24 +38,27 @@ const data = reactive({
 
 async function submit(e: Event | SubmitEvent) {
   const formData = new FormData(e.target as HTMLFormElement);
+
   let artists = formData.get("artists") as string;
   let artists_list: string[] = artists
     .split(",")
     .map((artist: string) => artist.trim());
+
   // Testing
+  // @ts-ignore
   for (const [key, val] of formData.entries()) {
     console.log(`${key}: ${val}`);
   }
-  console.log("Data", data);
 
+  console.log("Data", data);
   const data_object = {
     name: formData.get("name"),
     artists: artists_list,
+    artist_id: 123213,
     tags: data.tags,
     music_file: formData.get("music_file"),
     image_file: formData.get("image_file"),
   };
-
   const url = BASE_URL + "/music/";
   const res = await axios.post(url, data_object, {
     headers: {
@@ -51,19 +71,7 @@ async function submit(e: Event | SubmitEvent) {
 }
 
 function onImageChange(e: any) {
-  const file = e.target.files[0];
-
-  // Animation
-  if (previewImage.value) {
-    useAnimate(
-      previewImage.value,
-      [{ opacity: 1 }, { opacity: 0 }, { opacity: 0 }, { opacity: 1 }],
-      1000
-    );
-    setTimeout(() => (previewURL.value = URL.createObjectURL(file)), 510);
-  } else {
-    previewURL.value = URL.createObjectURL(file);
-  }
+  animateImageChange(e, previewURL, previewImage);
 }
 
 async function searchUserByName(e: Event | InputEvent) {
@@ -74,12 +82,33 @@ async function searchUserByName(e: Event | InputEvent) {
   const result = await getUsersByName(name);
   if (result) console.log("User search by name results", result.data);
 }
+
+async function findArtists(query: string) {
+  // Update artistList based on query
+}
 </script>
 
 <template>
   <section class="bg-base-300 p-10 pt-20">
     <h1 class="text-4xl font-bold">Upload</h1>
   </section>
+
+  <div class="w-1/2 p-10">
+    <p>Test Multiselect:</p>
+    <VueMultiSelect
+      class="multiselect"
+      label="name"
+      track-by="id"
+      :multiple="true"
+      v-model="selectedArtistsList"
+      :options="artistList"
+      @search-change="findArtists"
+    >
+      <template #noResult> Oops! No artists found. </template>
+    </VueMultiSelect>
+
+    <p class="mt-5">Selected: {{ selectedArtistsList }}</p>
+  </div>
 
   <!-- Upload Form Section -->
   <section class="p-10 space-y-10 md:(grid grid-cols-3 space-y-0)">
@@ -169,7 +198,6 @@ async function searchUserByName(e: Event | InputEvent) {
       <button type="submit" class="btn btn-secondary">Create Music</button>
     </form>
     <Transition name="fade" mode="out-in">
-      <!-- src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTz_Ufk5pON5I9UyQcWYdvFZj_dxZaDITOQ3w&usqp=CAU" -->
       <img
         ref="previewImage"
         :src="previewURL"

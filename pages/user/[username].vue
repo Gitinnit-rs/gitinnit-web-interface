@@ -4,34 +4,28 @@ import { Music } from "~/types";
 
 const route = useRoute();
 
-const id = route.params.id;
-// 1ab2ed3d-f15b-4ea8-b03e-2e3bb42716cb
+const username = route.params.username;
 
 const {
   data: user,
   pending,
   error,
-} = useFetch<any[]>(BASE_URL + "/user/" + id);
-const {
-  data: music,
-  pending: pendingMusic,
-  error: errorMusic,
-} = useFetch<Music[]>(BASE_URL + "/music?artist_id=" + id);
+} = useFetch<any[]>(BASE_URL + "/user?includeMusic=true&username=" + username);
+
+const music = computed(() => (user.value as any[])[0].music as Music[]);
 
 useHead({
   title: user.value ? user.value[0].name : "User",
 });
 
-console.log({ music: music.value });
+console.log({ music, user });
 </script>
 <template>
-  <section v-if="!id" class="p-10">
-    <h1>Profile with id {{ id }} not found</h1>
+  <section v-if="!username" class="p-10">
+    <h1>Profile {{ username }} not found</h1>
   </section>
-  <section v-else-if="(pending || pendingMusic) && !user && !music">
-    Loading...
-  </section>
-  <section v-else-if="(error || errorMusic) && !user && !music" class="p-10">
+  <section v-else-if="pending && !user && !music">Loading...</section>
+  <section v-else-if="error && !user && !music" class="p-10">
     <div class="alert alert-error shadow-lg">
       <div>
         <svg
@@ -48,9 +42,8 @@ console.log({ music: music.value });
           />
         </svg>
         <span>
-          An error occurred while fetching user details<br />{{ error }} |
-          {{ errorMusic }}</span
-        >
+          An error occurred while fetching user details<br />{{ error }}
+        </span>
       </div>
     </div>
   </section>
@@ -78,7 +71,7 @@ console.log({ music: music.value });
       <div class="mt-6 w-1/2">
         <p v-if="!music || music.length === 0">No music yet.</p>
         <template v-else>
-          <MusicItem v-for="m in music" :key="m.id" :music="m" />
+          <MusicItem v-for="item in music" :key="item.id" :music="item" />
         </template>
       </div>
     </div>

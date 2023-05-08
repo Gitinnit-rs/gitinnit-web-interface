@@ -16,7 +16,7 @@ const router = useRouter();
       <img
         src="https://upload.wikimedia.org/wikipedia/en/7/7e/Martin_Garrix_-_Animals.png"
         class="w-[6rem] h-[6rem] rounded-lg shadow-2xl object-cover"
-        alt="Gitinnit User's Profile Image"
+        alt="Gitinnit Music Profile Image"
       />
       <div class="py-1">
         <h1 class="text-3xl font-bold">{{ music.name }}</h1>

@@ -1,0 +1,26 @@
+[
+    {
+        "id": "d5fe314a-6ae5-448e-a21c-2b350a387ad3",
+        "name": "Animals",
+        "release_date": "2023-04-01T17:13:45+00:00",
+        "music_url": "https://mrbjldqyfbpdayfaucuu.supabase.co/storage/v1/object/public/music/1ab2ed3d-f15b-4ea8-b03e-2e3bb42716cb/fdea5836-7db5-4f6e-badd-e012aac0636b",
+        "artist_id": 123213,
+        "tags": [],
+        "genre": [],
+        "cover_url": "",
+        "like_count": 0,
+        "artists": []
+    },
+    {
+        "id": "175ae750-5bfc-4bca-bbb6-7f298907c1aa",
+        "name": "Imagine Dragons",
+        "release_date": "2023-04-03T15:41:23+00:00",
+        "music_url": "https://mrbjldqyfbpdayfaucuu.supabase.co/storage/v1/object/public/music/f1ce894d-ef04-47df-bfcd-5d5812fcb3a3/f9bc08f2-f24f-4540-8e4e-27dd3fe4a82e",
+        "artist_id": 123213,
+        "tags": [],
+        "genre": [],
+        "cover_url": "",
+        "like_count": 0,
+        "artists": []
+    }
+]
