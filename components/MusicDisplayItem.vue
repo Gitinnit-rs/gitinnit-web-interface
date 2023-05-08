@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { MusicDisplayItemInterface } from "@/types";
+import { Music } from "@/types";
 
 defineProps<{
-  music: MusicDisplayItemInterface;
+  music: Music;
 }>();
 </script>
 <template>
@@ -16,8 +16,8 @@ defineProps<{
       <div class="py-1">
         <h1 class="font-bold">{{ music.name }}</h1>
         <p v-if="music.artists" class="text-xs">
-          <span v-for="(artist, i) in music.artists" :key="artist">
-            {{ artist }}
+          <span v-for="(artist, i) in music.artists" :key="artist.id">
+            {{ artist.name }}
             <span v-if="i !== music.artists.length - 1">, </span>
           </span>
         </p>

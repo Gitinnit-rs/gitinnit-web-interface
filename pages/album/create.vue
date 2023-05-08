@@ -73,10 +73,12 @@ function addToList(music: any) {
   if (selectedMusicList.value.includes(music)) return;
 
   selectedMusicList.value.push(music);
+  musicList.value.splice(musicList.value.indexOf(music), 1);
 }
 
 function removeFromList(music: any) {
   selectedMusicList.value.splice(selectedMusicList.value.indexOf(music), 1);
+  musicList.value.push(music);
 }
 </script>
 
@@ -121,6 +123,8 @@ function removeFromList(music: any) {
             required
           />
         </div>
+
+        <button class="mt-5 btn btn-primary">Create Album</button>
       </form>
 
       <div class="mt-10">
