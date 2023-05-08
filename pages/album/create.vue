@@ -109,6 +109,8 @@ function removeFromList(music: any) {
             required
           />
         </div>
+
+        <button class="mt-5 btn btn-primary">Create Album</button>
       </form>
 
       <div class="mt-10">
