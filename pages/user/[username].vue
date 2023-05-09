@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { BASE_URL } from "~/constants";
-import { Music } from "~/types";
+import { Music, Album } from "~/types";
 import { useUserStore } from "~/store/user.store";
 import { storeToRefs } from "pinia";
 import { getUserFollowers, followUser, unfollowUser } from "~/utils/user";
@@ -23,10 +23,11 @@ const {
     pending,
     error,
 } = await useFetch<any[]>(
-    BASE_URL + "/user?includeMusic=true&username=" + username
+    BASE_URL + "/user?includeMusic=true&includeAlbum=true&username=" + username
 );
 
 const music = computed(() => (user.value as any[])[0].music as Music[]);
+const album = computed(() => (user.value as any[])[0].album as Album[]);
 const followers = ref([]);
 
 const userId = ref((user.value as any[])[0].id);
@@ -132,6 +133,23 @@ console.log({ music, user });
                         v-for="item in music"
                         :key="item.id"
                         :music="item"
+                    />
+                </template>
+            </div>
+        </div>
+
+        <div class="p-10">
+            <h1 class="text-4xl font-bold">Albums</h1>
+
+            <!-- List of album Items -->
+            <div class="mt-6 w-1/2">
+                <p v-if="!music || music.length === 0">No albums yet.</p>
+                <template v-else>
+                    <AlbumItem
+                        v-for="item in album"
+                        :key="item.id"
+                        :album="item"
+                        :artist_name="user[0].name"
                     />
                 </template>
             </div>
