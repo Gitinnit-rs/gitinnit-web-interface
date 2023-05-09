@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { BASE_URL } from "~/constants";
-import { Music } from "~/types";
+import { Album, Music } from "~/types";
 import { useUserStore } from "~/store/user.store";
 import { storeToRefs } from "pinia";
 import { getUserFollowers } from "~/utils/user";
@@ -21,13 +21,21 @@ const {
     pending,
     error,
 } = await useFetch<any[]>(
-    BASE_URL + "/user?includeMusic=true&username=" + loggedInUser.value?.login
+    BASE_URL +
+        "/user?includeMusic=true&includeAlbum=true&username=" +
+        loggedInUser.value?.login
 );
 
 const music = computed(() => (user.value as any[])[0].music as Music[]);
+const album = computed(() => (user.value as any[])[0].album as Album[]);
 const followers = ref([]);
 followers.value = await getUserFollowers((user.value as any[])[0].id);
 console.log(followers.value.length);
+
+//print all key value pairs of album[0]
+for (const [key, value] of Object.entries(album.value[0])) {
+    console.log(`${key}: ${value}`);
+}
 
 onMounted(() => {
     if (!isLoggedIn.value) {
@@ -93,6 +101,19 @@ onMounted(() => {
                         v-for="item in music"
                         :key="item.id"
                         :music="item"
+                    />
+                </template>
+            </div>
+
+            <!-- list of album items -->
+            <div class="mt-6 w-1/2">
+                <p v-if="!music || music.length === 0">No albums yet.</p>
+                <template v-else>
+                    <AlbumItem
+                        v-for="item in album"
+                        :key="item.id"
+                        :album="item"
+                        :artist_name="user[0].name"
                     />
                 </template>
             </div>
