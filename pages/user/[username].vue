@@ -119,6 +119,7 @@ console.log({ music, user });
         >
             Unfollow User
         </button>
+        <h3>Number of followers {{ followers.length }}</h3>
 
         <div class="p-10">
             <h1 class="text-4xl font-bold">Music</h1>
