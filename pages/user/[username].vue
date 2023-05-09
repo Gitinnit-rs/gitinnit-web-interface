@@ -14,7 +14,7 @@ const store = useUserStore();
 const { user: loggedInUser } = storeToRefs(store);
 
 const isLoggedIn = computed(() => {
-    return user.value && user.value;
+    return loggedInUser.value && true;
 });
 const isLoggedInUser = computed(() => loggedInUser.value?.login === username);
 
@@ -72,11 +72,11 @@ useHead({
 });
 
 onMounted(() => {
-    console.log(
-        loggedInUserId.value,
-        userId.value,
-        loggedInUserAccessToken.value
-    );
+    // console.log(
+    //     loggedInUserId.value,
+    //     userId.value
+    //     loggedInUserAccessToken.isLoggedIn.value
+    // );
     if (isLoggedInUser.value) {
         router.push("/user");
     }
