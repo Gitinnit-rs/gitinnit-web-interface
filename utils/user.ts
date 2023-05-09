@@ -86,7 +86,7 @@ export async function followUser(
             },
         }
     );
-    if (status !== 200) throw new Error("Got invalid status code " + status);
+    // if (status !== 200) throw new Error("Got invalid status code " + status);
     return data;
 }
 
@@ -109,6 +109,6 @@ export async function unfollowUser(
             },
         }
     );
-    if (status !== 200) throw new Error("Got invalid status code " + status);
+    // if (status !== 200) throw new Error("Got invalid status code " + status);
     return data;
 }

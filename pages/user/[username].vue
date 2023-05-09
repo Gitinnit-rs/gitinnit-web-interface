@@ -26,9 +26,35 @@ const {
     BASE_URL + "/user?includeMusic=true&includeAlbum=true&username=" + username
 );
 
-const music = computed(() => (user.value as any[])[0].music as Music[]);
-const album = computed(() => (user.value as any[])[0].album as Album[]);
+const music = computed(
+    () => user.value && ((user.value as any[])[0].music as Music[])
+);
+const album = computed(
+    () => user.value && ((user.value as any[])[0].album as Album[])
+);
 const followers = ref([]);
+
+async function getFollowers() {
+    followers.value = await getUserFollowers((user.value as any[])[0].id);
+}
+
+async function followUserRef(
+    follower_id: string,
+    following_id: string,
+    bearer_token: string
+) {
+    await followUser(follower_id, following_id, bearer_token);
+    await getFollowers();
+}
+
+async function unfollowUserRef(
+    follower_id: string,
+    following_id: string,
+    bearer_token: string
+) {
+    await unfollowUser(follower_id, following_id, bearer_token);
+    await getFollowers();
+}
 
 const userId = ref((user.value as any[])[0].id);
 const loggedInUserId = ref(loggedInUser.value?.id);
@@ -106,7 +132,9 @@ console.log({ music, user });
         <button
             v-if="isLoggedIn"
             class="btn btn-primary"
-            @click="followUser(loggedInUserId, userId, loggedInUserAccessToken)"
+            @click="
+                followUserRef(loggedInUserId, userId, loggedInUserAccessToken)
+            "
         >
             Follow User
         </button>
@@ -115,7 +143,7 @@ console.log({ music, user });
             v-if="isLoggedIn"
             class="btn btn-primary"
             @click="
-                unfollowUser(loggedInUserId, userId, loggedInUserAccessToken)
+                unfollowUserRef(loggedInUserId, userId, loggedInUserAccessToken)
             "
         >
             Unfollow User
