@@ -54,7 +54,7 @@ console.log({ music, user });
     <section v-else-if="user">
         <div class="hero py-10 bg-base-200">
             <div class="hero-content text-center">
-                <div class="max-w-md">
+                <div class="max-w-md flex flex-col items-center">
                     <img
                         :src="user[0].profile_photo"
                         class="w-[20rem] h-[20rem] rounded-lg shadow-2xl object-cover"
