@@ -1,49 +1,43 @@
 <script setup lang="ts">
+import { BASE_URL } from "~/constants";
+import { Music } from "~/types";
+
 useHead({
     title: "Dashboard",
 });
 
-const communityProjects = [
-    {
-        id: 0,
-        name: "Summer Days",
-        author: "Martin Garrix",
-        image: randomImage(),
-        genre: "Electro House",
-        path: "",
-        tags: [],
-    },
-    {
-        id: 1,
-        name: "In the name of the king",
-        author: "King Krusher",
-        image: randomImage(),
-        genre: "Hip-Hop",
-        path: "",
-        tags: [],
-    },
-    {
-        id: 2,
-        name: "SkateLess",
-        author: "Steve Aoki",
-        image: randomImage(),
-        genre: "Electronic",
-        path: "",
-        tags: [],
-    },
-    {
-        id: 3,
-        name: "Fireball",
-        author: "Pitbull",
-        image: randomImage(),
-        genre: "Electronic",
-        path: "",
-        tags: [],
-    },
-];
+/// Fetch all music, users and posts data ///
+
+// Fetch music
+const { data: music, pending, error } = useFetch<Music[]>(BASE_URL + "/music");
+
+console.log("MUSIC DATA", music);
 </script>
 <template>
-    <div class="bg-base-300">
+    <section v-if="error">
+        <div class="alert alert-error shadow-lg">
+            <div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="stroke-current flex-shrink-0 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+                <span>
+                    An error occurred while fetching data<br />{{ error }}
+                </span>
+            </div>
+        </div>
+    </section>
+    <section v-else-if="pending && !music">Loading...</section>
+    <div v-else class="bg-base-300">
         <!-- Hero Section -->
         <section class="hero p-5 bg-base-300">
             <div class="hero-content flex-col lg:flex-row space-x-5">
@@ -63,17 +57,17 @@ const communityProjects = [
 
         <section class="bg-base-100 p-10 rounded-t-4xl">
             <h1 class="uppercase tracking-widest text-xs text-gray-500">
-                Community Projects
+                Latest releases
             </h1>
             <div class="-ml-3">
-                <div class="grid grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-                    <ProjectCard
-                        :project="project"
-                        v-for="project in communityProjects.concat(
-                            communityProjects
-                        )"
-                        :key="project.name + project.author"
-                    />
+                <div
+                    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+                >
+                    <template v-for="item in music" :key="item.id">
+                        <NuxtLink :to="'/music/' + item.id">
+                            <MusicDisplayItem :music="item"> </MusicDisplayItem>
+                        </NuxtLink>
+                    </template>
                 </div>
             </div>
         </section>
