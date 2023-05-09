@@ -50,7 +50,7 @@ async function submit(e: Event | SubmitEvent) {
   const data_object = {
     name: formData.get("name"),
     artists: artists_list,
-    access_token: user.$state.user.access_token,
+    // access_token: user.$state.user.access_token,
     tags: data.tags,
     music_file: formData.get("music_file"),
     image_file: formData.get("image_file"),
@@ -58,6 +58,7 @@ async function submit(e: Event | SubmitEvent) {
   const url = BASE_URL + "/music/";
   const res = await axios.post(url, data_object, {
     headers: {
+      Authorization: `Bearer ${user.$state.user.access_token}`,
       "Content-Type": "multipart/form-data",
     },
   });
@@ -86,6 +87,10 @@ async function findArtists(query: string) {
   const result = await getUsersByName(query);
   artistList.value = result.data;
   // Update artistList based on query
+}
+
+function handleChangeTag(tags: string[]) {
+  data.tags = tags;
 }
 </script>
 
@@ -182,7 +187,11 @@ async function findArtists(query: string) {
         <label class="label">
           <span class="label-text">Tags</span>
         </label>
-        <vue3-tags-input :tags="data.tags" placeholder="Tags" />
+        <vue3-tags-input
+          :tags="data.tags"
+          placeholder="Tags"
+          @on-tags-changed="handleChangeTag"
+        />
       </div>
 
       <div class="form-control w-30 mt-5">

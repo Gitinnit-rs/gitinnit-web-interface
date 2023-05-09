@@ -37,12 +37,12 @@ async function submit(e: Event | SubmitEvent) {
   const data_object = {
     name: formData.get("name"),
     image_file: formData.get("image_file"),
-    access_token: user.$state.user.access_token,
     musics: selectedMusicList,
   };
   const url = BASE_URL + "/music/album/";
   const res = await axios.post(url, data_object, {
     headers: {
+      Authorization: `Bearer ${user.$state.user.access_token}`,
       "Content-Type": "multipart/form-data",
     },
   });
