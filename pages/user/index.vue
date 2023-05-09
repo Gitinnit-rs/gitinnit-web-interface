@@ -26,16 +26,28 @@ const {
         loggedInUser.value?.login
 );
 
-const music = computed(() => (user.value as any[])[0].music as Music[]);
-const album = computed(() => (user.value as any[])[0].album as Album[]);
+// let user_data=null
+
+watch(user, async () => {
+    if (loggedInUser.value && user.value) {
+        followers.value = await getUserFollowers((user.value as any[])[0].id);
+    }
+});
+
+const music = computed(
+    () => user.value && ((user.value as any[])[0].music as Music[])
+);
+const album = computed(
+    () => user.value && ((user.value as any[])[0].album as Album[])
+);
 const followers = ref([]);
-followers.value = await getUserFollowers((user.value as any[])[0].id);
+// followers.value = await getUserFollowers((user.value as any[])[0].id);
 console.log(followers.value.length);
 
 //print all key value pairs of album[0]
-for (const [key, value] of Object.entries(album.value[0])) {
-    console.log(`${key}: ${value}`);
-}
+// for (const [key, value] of Object.entries(album.value[0])) {
+//     console.log(`${key}: ${value}`);
+// }
 
 onMounted(() => {
     if (!isLoggedIn.value) {
@@ -104,8 +116,12 @@ onMounted(() => {
                     />
                 </template>
             </div>
+        </div>
 
-            <!-- list of album items -->
+        <!-- list of album items -->
+        <div class="p-10">
+            <h1 class="text-4xl font-bold">Albums</h1>
+
             <div class="mt-6 w-1/2">
                 <p v-if="!music || music.length === 0">No albums yet.</p>
                 <template v-else>
