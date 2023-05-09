@@ -4,7 +4,6 @@ interface IUserStore {
     user: any;
 }
 
-// @ts-ignore
 export const useUserStore = defineStore("user", {
     state: (): IUserStore => ({
         user: null,
