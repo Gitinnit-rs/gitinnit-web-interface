@@ -1,26 +1,19 @@
 export interface Music {
-  id: string;
-  name: string;
-  release_date: string;
-  tags: string[];
-  genre: string[];
-  like_count: number;
-  music_url: string;
-  cover_url: string;
-  artist_id: string;
+    id: string;
+    name: string;
+    release_date: string;
+    tags: string[];
+    genre: string[];
+    like_count: number;
+    music_url: string;
+    cover_url: string;
+    artist_id: string;
 
-  artists: Artist[];
+    artists: Artist[];
 }
 
 export interface Artist {
-  name: string;
-  id: string;
-}
-
-export interface MusicDisplayItemInterface {
-  id: string | number;
-  name: string;
-  cover_url: string;
-
-  artists?: string[];
+    id: string;
+    name: string;
+    username: string;
 }

@@ -1,13 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  app: {
-    head: {
-      title: "App",
+    devServer: {
+        port: 4200,
     },
-  },
-  modules: [
-    "nuxt-windicss",
-    "@pinia/nuxt",
-    "@pinia-plugin-persistedstate/nuxt",
-  ],
+    app: {
+        head: {
+            title: "App",
+        },
+    },
+    modules: [
+        "nuxt-windicss",
+        "@pinia/nuxt",
+        "@pinia-plugin-persistedstate/nuxt",
+    ],
 });
