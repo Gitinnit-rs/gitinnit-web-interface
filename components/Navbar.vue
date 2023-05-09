@@ -91,7 +91,7 @@ onMounted(() => {
                         </NuxtLink>
                     </li>
                     <li>
-                        <NuxtLink to="/profile">
+                        <NuxtLink to="/user">
                             <span><SettingsIcon /></span>
                             <span> Settings </span>
                         </NuxtLink>

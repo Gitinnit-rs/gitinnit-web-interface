@@ -20,7 +20,7 @@ useHead({
 <template>
     <section v-if="pending">Loading...</section>
     <section v-else-if="music" class="bg-base-200 p-10">
-        <div class="flex flex-col items-center justify-center space-y-5 text-center">
+        <div class="flex flex-col items-center space-y-5 text-center w-full min-h-screen">
             <img
                 :src="music[0].cover_url || FALLBACK_IMAGE_URL"
                 alt="Music Image"
