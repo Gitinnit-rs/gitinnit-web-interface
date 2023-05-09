@@ -16,9 +16,12 @@ const loggedIn = computed(() => {
     return user.value && user.value.access_token;
 });
 
-let returnURL = window.location.origin + `/authCallback`;
-const redirectURL = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
-console.log(redirectURL);
+const redirectURL = ref("");
+
+onMounted(() => {
+    const returnURL = window.location.origin + `/authCallback`;
+    redirectURL.value = `${AUTH_URL}/auth/github/?returnUrl=${returnURL}`;
+});
 </script>
 
 <template>
