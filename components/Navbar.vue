@@ -76,15 +76,18 @@ onMounted(() => {
                 </label>
                 <ul
                     tabindex="0"
-                    class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
+                    class="mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
                 >
-                    <div v-if="user" class="p-3">
+                    <div
+                        v-if="user"
+                        class="p-5 bg-info-content text-white rounded-t-xl"
+                    >
                         <h3 v-if="user.name" class="text-sm font-semibold">
                             {{ user.name }}
                         </h3>
-                        <p class="text-xs">@{{ user.login }}</p>
+                        <p class="text-xs text-gray-300">@{{ user.login }}</p>
                     </div>
-                    <li>
+                    <li class="pt-1">
                         <NuxtLink to="/user">
                             <span><AccountIcon /></span>
                             <span> Profile </span>
