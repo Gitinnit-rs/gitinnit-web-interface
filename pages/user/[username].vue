@@ -3,7 +3,7 @@ import { BASE_URL } from "~/constants";
 import { Music } from "~/types";
 import { useUserStore } from "~/store/user.store";
 import { storeToRefs } from "pinia";
-import { getUserFollowers, followUser } from "~/utils/user";
+import { getUserFollowers, followUser, unfollowUser } from "~/utils/user";
 
 const route = useRoute();
 const router = useRouter();
@@ -105,15 +105,19 @@ console.log({ music, user });
         <button
             v-if="isLoggedIn"
             class="btn btn-primary"
-            @click="
-                followUser(
-                    loggedInUserId.value,
-                    userId.value,
-                    loggedInUserAccessToken.value
-                )
-            "
+            @click="followUser(loggedInUserId, userId, loggedInUserAccessToken)"
         >
             Follow User
+        </button>
+
+        <button
+            v-if="isLoggedIn"
+            class="btn btn-primary"
+            @click="
+                unfollowUser(loggedInUserId, userId, loggedInUserAccessToken)
+            "
+        >
+            Unfollow User
         </button>
 
         <div class="p-10">
