@@ -32,7 +32,8 @@ const music = computed(
 const album = computed(
     () => user.value && ((user.value as any[])[0].album as Album[])
 );
-const followers = ref([]);
+const followers: Ref<Array<any>> = ref([]);
+// const isFollowing=computed(()=>followers.value.includes(loggedInUser.value?.id))
 
 async function getFollowers() {
     followers.value = await getUserFollowers((user.value as any[])[0].id);
@@ -129,26 +130,36 @@ console.log({ music, user });
             </div>
         </div>
 
-        <button
-            v-if="isLoggedIn"
-            class="btn btn-primary"
-            @click="
-                followUserRef(loggedInUserId, userId, loggedInUserAccessToken)
-            "
-        >
-            Follow User
-        </button>
+        <section v-if="isLoggedIn">
+            <button
+                v-if="!followers.includes(loggedInUserId)"
+                class="btn btn-primary"
+                @click="
+                    followUserRef(
+                        loggedInUserId,
+                        userId,
+                        loggedInUserAccessToken
+                    )
+                "
+            >
+                Follow User
+            </button>
 
-        <button
-            v-if="isLoggedIn"
-            class="btn btn-primary"
-            @click="
-                unfollowUserRef(loggedInUserId, userId, loggedInUserAccessToken)
-            "
-        >
-            Unfollow User
-        </button>
-        <h3>Number of followers {{ followers.length }}</h3>
+            <button
+                v-else
+                class="btn btn-primary"
+                @click="
+                    unfollowUserRef(
+                        loggedInUserId,
+                        userId,
+                        loggedInUserAccessToken
+                    )
+                "
+            >
+                Unfollow User
+            </button>
+            <h3>Number of followers {{ followers.length }}</h3>
+        </section>
 
         <div class="p-10">
             <h1 class="text-4xl font-bold">Music</h1>
