@@ -12,6 +12,15 @@ export interface Music {
     artists: Artist[];
 }
 
+export interface Album {
+    id: string;
+    name: string;
+    desc: string;
+    release_date: string;
+    cover_url: string;
+    artist_id: string;
+}
+
 export interface Artist {
     id: string;
     name: string;

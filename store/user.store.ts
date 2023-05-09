@@ -6,7 +6,7 @@ interface IUserStore {
 
 export const useUserStore = defineStore("user", {
     state: (): IUserStore => ({
-        user: null,
+        user: {},
     }),
     getters: {
         isLoggedIn({ user }) {
@@ -28,5 +28,7 @@ export const useUserStore = defineStore("user", {
             }
         },
     },
-    persist: true,
+    persist: {
+        storage: persistedState.localStorage,
+    },
 });
