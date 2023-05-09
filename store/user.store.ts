@@ -8,6 +8,11 @@ export const useUserStore = defineStore("user", {
     state: (): IUserStore => ({
         user: {},
     }),
+    getters: {
+        isLoggedIn({ user }) {
+            return user && user.access_token;
+        },
+    },
     actions: {
         setUser(user: any) {
             this.user = user;
