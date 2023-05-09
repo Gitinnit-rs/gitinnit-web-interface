@@ -1,21 +1,57 @@
 <script lang="ts" setup>
 import { BASE_URL } from "~/constants";
 import { Music } from "~/types";
+import { useUserStore } from "~/store/user.store";
+import { storeToRefs } from "pinia";
+import { getUserFollowers, followUser } from "~/utils/user";
 
 const route = useRoute();
+const router = useRouter();
 
 const username = route.params.username;
+
+const store = useUserStore();
+const { user: loggedInUser } = storeToRefs(store);
+
+const isLoggedIn = computed(() => {
+  return user.value && user.value;
+});
+const isLoggedInUser = computed(() => loggedInUser.value?.login === username);
 
 const {
   data: user,
   pending,
   error,
-} = useFetch<any[]>(BASE_URL + "/user?includeMusic=true&username=" + username);
+} = await useFetch<any[]>(
+  BASE_URL + "/user?includeMusic=true&username=" + username
+);
 
 const music = computed(() => (user.value as any[])[0].music as Music[]);
+const followers = ref([]);
+
+const userId = ref((user.value as any[])[0].id);
+const loggedInUserId = ref(loggedInUser.value?.id);
+const loggedInUserAccessToken = ref(loggedInUser.value?.access_token);
+
+followers.value = await getUserFollowers((user.value as any[])[0].id);
+console.log(followers.value);
+
+// const follow = await followUser(loggedInUserId.value, userId.value);
+// console.log(follow);
 
 useHead({
   title: user.value ? user.value[0].name : "User",
+});
+
+onMounted(() => {
+  console.log(
+    loggedInUserId.value,
+    userId.value,
+    loggedInUserAccessToken.value
+  );
+  if (isLoggedInUser.value) {
+    router.push("/user");
+  }
 });
 
 console.log({ music, user });
@@ -63,6 +99,20 @@ console.log({ music, user });
         </div>
       </div>
     </div>
+
+    <button
+      v-if="isLoggedIn"
+      class="btn btn-primary"
+      @click="
+        followUser(
+          loggedInUserId.value,
+          userId.value,
+          loggedInUserAccessToken.value
+        )
+      "
+    >
+      Follow User
+    </button>
 
     <div class="p-10">
       <h1 class="text-4xl font-bold">Music</h1>

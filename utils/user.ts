@@ -48,7 +48,7 @@ export async function getUserDetails(initial_access_token?: string) {
         username: data.login,
         bio: data.bio,
         profile_photo: data.avatar_url,
-      },
+      }
     );
     if (create_status !== 200)
       throw new Error("Got invalid status code " + status);
@@ -56,5 +56,34 @@ export async function getUserDetails(initial_access_token?: string) {
   } else {
     updateUserId(user_data[0].id);
   }
+  return data;
+}
+
+export async function getUserFollowers(id: string) {
+  const url = BASE_URL + "/user/followers/" + String(id);
+  const { data, status } = await axios.get(url);
+  if (status !== 200) throw new Error("Got invalid status code " + status);
+  return data;
+}
+
+export async function followUser(
+  follower_id: string,
+  following_id: string,
+  bearer_token: string
+) {
+  const url = BASE_URL + "/user/follow";
+  const { status, data } = await axios.post(
+    url,
+    {
+      follower_id,
+      following_id,
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + bearer_token,
+      },
+    }
+  );
+  if (status !== 200) throw new Error("Got invalid status code " + status);
   return data;
 }
