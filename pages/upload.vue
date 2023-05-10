@@ -33,10 +33,9 @@ async function submit(e: Event | SubmitEvent) {
     const formData = new FormData(e.target as HTMLFormElement);
     let user = useUserStore();
 
-    let artists = formData.get("artists") as string;
-    let artists_list: string[] = artists
-        .split(",")
-        .map((artist: string) => artist.trim());
+    let artists_list = selectedArtistsList.value.map((artist: any) => {
+        return artist.id;
+    });
 
     const data_object = {
         name: formData.get("name"),
