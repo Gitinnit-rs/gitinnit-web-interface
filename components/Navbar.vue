@@ -10,6 +10,8 @@ import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
 import SettingsIcon from "vue-material-design-icons/Cog.vue";
 import LogoutIcon from "vue-material-design-icons/Logout.vue";
 
+const router = useRouter();
+
 const store = useUserStore();
 const { user, isLoggedIn } = storeToRefs(store);
 
@@ -61,6 +63,7 @@ onMounted(() => {
                     type="text"
                     placeholder="Search"
                     class="input input-bordered"
+                    @keypress.enter="(e) => (e.target as any).value.length > 0 && router.push('/search?q=' + (e.target as any).value)"
                 />
             </div>
             <div v-if="isLoggedIn" class="dropdown dropdown-end bg-base-300">

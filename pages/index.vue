@@ -11,15 +11,22 @@ useHead({
 // Fetch music
 const { data: music, pending, error } = useFetch<Music[]>(BASE_URL + "/music");
 const {
-    data: user,
-    pending: pendingUser,
-    error: errorUser,
-} = useFetch<any[]>(BASE_URL + "/user/*");
+    data: users,
+    pending: pendingUsers,
+    error: errorUsers,
+} = useFetch<any[]>(BASE_URL + "/user");
 
-console.log("USER DATA", user);
+const {
+    data: albums,
+    pending: pendingAlbums,
+    error: errorAlbums,
+} = useFetch<any[]>(BASE_URL + "/music/album");
+
+console.log("USER DATA", users);
+console.log("ALBUM DATA", albums);
 </script>
 <template>
-    <section v-if="error || errorUser" class="p-10">
+    <section v-if="error || errorUsers" class="p-10">
         <div class="alert alert-error shadow-lg">
             <div>
                 <svg
@@ -37,12 +44,20 @@ console.log("USER DATA", user);
                 </svg>
                 <span>
                     An error occurred while fetching data<br />Music Errors:
-                    {{ error || "None" }}<br />User data Error: {{ errorUser || "None" }}
+                    {{ error || "None" }}
+                    <br />
+                    User data Error:
+                    {{ errorUsers || "None" }}
+                    <br />
+                    Album data Error:
+                    {{ errorAlbums || "None" }}
                 </span>
             </div>
         </div>
     </section>
-    <section v-else-if="pending && !music">Loading...</section>
+    <section v-else-if="pending || pendingUsers || pendingAlbums">
+        Loading...
+    </section>
     <div v-else class="bg-base-300">
         <!-- Hero Section -->
         <section class="hero p-5 bg-base-300">
