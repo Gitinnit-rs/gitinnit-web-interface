@@ -5,7 +5,7 @@ useHead({
     title: "Search",
 });
 
-const route = useRoute();
+const route = useRoute("search");
 const query = ref(route.query.q);
 const url = computed(() => `${BASE_URL}/search/${query.value}`);
 

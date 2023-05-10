@@ -5,7 +5,7 @@ import { useUserStore } from "~/store/user.store";
 import { storeToRefs } from "pinia";
 import { getUserFollowers, followUser, unfollowUser } from "~/utils/user";
 
-const route = useRoute();
+const route = useRoute("user-username");
 const router = useRouter();
 
 const username = route.params.username;

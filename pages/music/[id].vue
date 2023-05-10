@@ -1,15 +1,27 @@
 <script lang="ts" setup>
+import { storeToRefs } from "pinia";
 import { BASE_URL, FALLBACK_IMAGE_URL } from "~/constants";
+import { useStore } from "~/store";
 import { Music } from "~/types";
 
-const route = useRoute();
+const store = useStore();
+const { activeMusic } = storeToRefs(store);
+const route = useRoute("music-id");
 const id = route.params.id;
-// d5fe314a-6ae5-448e-a21c-2b350a387ad3
 
 const { data: music, pending } = useFetch<Music[]>(BASE_URL + "/music", {
     query: {
         id,
     },
+});
+
+watch(pending, () => {
+    console.log("PATCHING WITH NEW MUSIC");
+    if (!pending && music.value && music.value[0]) {
+        store.$patch({
+            activeMusic: music.value[0],
+        });
+    }
 });
 
 useHead({
@@ -45,6 +57,7 @@ useHead({
                     >
                 </p>
             </div>
+            {{ activeMusic }}
         </div>
     </section>
 </template>
