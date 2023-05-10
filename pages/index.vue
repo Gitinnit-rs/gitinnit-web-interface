@@ -82,11 +82,11 @@ console.log("ALBUM DATA", albums);
             </h1>
             <div class="-ml-3">
                 <div
-                    class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5"
+                    class="responsive-grid"
                 >
                     <template v-for="item in music" :key="item.id">
                         <NuxtLink :to="'/music/' + item.id">
-                            <MusicDisplayItem :music="item"> </MusicDisplayItem>
+                            <DisplayItem :item="item"> </DisplayItem>
                         </NuxtLink>
                     </template>
                 </div>

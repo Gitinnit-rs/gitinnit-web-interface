@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Music, MusicDisplayItemInterface } from "@/types";
+import { Music } from "@/types";
 import { useDebounceFn } from "@vueuse/core";
 import { useUserStore } from "~/store/user.store";
 
@@ -156,10 +156,10 @@ function removeFromList(music: any) {
                         >
                     </p>
 
-                    <MusicDisplayItem
+                    <DisplayItem
                         v-for="music in musicList"
                         :key="music.id"
-                        :music="music"
+                        :item="music"
                         class="md:w-1/2"
                     >
                         <template #actions>
@@ -168,7 +168,7 @@ function removeFromList(music: any) {
                                 @click="addToList(music)"
                             />
                         </template>
-                    </MusicDisplayItem>
+                    </DisplayItem>
                 </div>
             </div>
         </div>
@@ -200,10 +200,10 @@ function removeFromList(music: any) {
 
             <!-- Selected Music List -->
             <div class="mt-5">
-                <MusicDisplayItem
+                <DisplayItem
                     v-for="music in selectedMusicList"
                     :key="music.id"
-                    :music="music"
+                    :item="music"
                 >
                     <template #actions>
                         <MinusIcon
@@ -211,7 +211,7 @@ function removeFromList(music: any) {
                             class="text-red-600 hover:text-red-500 transition cursor-pointer"
                         />
                     </template>
-                </MusicDisplayItem>
+                </DisplayItem>
             </div>
         </div>
     </section>
