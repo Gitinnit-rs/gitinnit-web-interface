@@ -24,12 +24,13 @@ function openModal() {
     isOpen.value = true;
 }
 
-async function submit() {
+async function submit(e: Event | SubmitEvent) {
     const formData = new FormData(e.target as HTMLFormElement);
     let user = useUserStore();
 
     const data_object = {
-        name: formData.get("name"),
+        caption: formData.get("post_content"),
+        type: "text",
         image_file: formData.get("image_file"),
     };
     const url = BASE_URL + "/post/";
@@ -97,6 +98,8 @@ async function submit() {
                             <form @submit.prevent="submit">
                                 <div class="mt-4">
                                     <textarea
+                                        id="post_content"
+                                        name="post_content"
                                         class="w-4/5 resize-none textarea textarea-bordered textarea-secondary"
                                         placeholder="My New Post!"
                                         required
