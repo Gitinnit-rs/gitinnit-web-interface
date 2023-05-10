@@ -75,7 +75,7 @@ console.log("Search data", data);
                         :key="user.id"
                         :to="`/user/${user.username}`"
                     >
-                        <DisplayItem :item="user" />
+                        <DisplayItem :item="user" :hoverable="true" />
                     </NuxtLink>
                 </div>
                 <p class="mt-2.5" v-else>No users found</p>
@@ -88,7 +88,7 @@ console.log("Search data", data);
                         :key="item.id"
                         :to="`/music/${item.id}`"
                     >
-                        <DisplayItem :item="item" />
+                        <DisplayItem :item="item" :hoverable="true" />
                     </NuxtLink>
                 </div>
                 <p class="mt-2.5" v-else>No music found</p>
@@ -101,10 +101,10 @@ console.log("Search data", data);
                         :key="album.id"
                         :to="`/album/${album.id}`"
                     >
-                        <DisplayItem :item="album" />
+                        <DisplayItem :item="album" :hoverable="true" />
                     </NuxtLink>
                 </div>
-                <p class="mt-2.5" v-else>No users found</p>
+                <p class="mt-2.5" v-else>No albums found</p>
             </div>
         </section>
     </section>

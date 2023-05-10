@@ -86,7 +86,7 @@ console.log("ALBUM DATA", albums);
                 >
                     <template v-for="item in music" :key="item.id">
                         <NuxtLink :to="'/music/' + item.id">
-                            <DisplayItem :item="item"> </DisplayItem>
+                            <DisplayItem :item="item" :hoverable="true"> </DisplayItem>
                         </NuxtLink>
                     </template>
                 </div>

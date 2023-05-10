@@ -3,10 +3,11 @@ import { FALLBACK_IMAGE_URL } from "@/constants";
 
 defineProps<{
     item: any;
+    hoverable?: boolean;
 }>();
 </script>
 <template>
-    <div class="w-full rounded-xl p-2 py-3 flex items-center justify-between">
+    <div class="w-full rounded-xl p-2 py-3 flex items-center justify-between" :class="hoverable && 'hover:bg-gray-100 transition'">
         <div class="flex items-center space-x-6">
             <img
                 :src="item.cover_url || item.profile_photo || FALLBACK_IMAGE_URL"

@@ -54,10 +54,11 @@ onMounted(() => {
             <NuxtLink
                 to="/upload"
                 role="button"
-                class="btn btn-sm btn-secondary"
+                class="btn btn-sm btn-secondary space-x-1"
             >
-                Upload
+                <PlusIcon class="mb-1" /> <span>Music</span>
             </NuxtLink>
+            <CreatePost />
             <div class="form-control">
                 <input
                     type="text"
