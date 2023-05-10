@@ -12,6 +12,7 @@ export default defineNuxtConfig({
         "nuxt-windicss",
         "@pinia/nuxt",
         "@pinia-plugin-persistedstate/nuxt",
+        "@vue-macros/nuxt",
         "nuxt-typed-router",
     ],
 });
