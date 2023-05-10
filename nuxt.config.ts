@@ -12,5 +12,6 @@ export default defineNuxtConfig({
         "nuxt-windicss",
         "@pinia/nuxt",
         "@pinia-plugin-persistedstate/nuxt",
+        "nuxt-typed-router",
     ],
 });

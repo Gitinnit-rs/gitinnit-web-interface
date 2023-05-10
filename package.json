@@ -22,6 +22,7 @@
     "daisyui": "^2.51.2",
     "dotenv": "^16.0.3",
     "nuxt-storage": "^1.2.2",
+    "nuxt-typed-router": "^3.2.0",
     "pinia": "^2.0.35",
     "vue-material-design-icons": "^5.2.0",
     "vue-multiselect": "^3.0.0-beta.1",
