@@ -3,6 +3,9 @@ import { ref } from "vue";
 
 // Icons
 import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
+import axios from "axios";
+import { useUserStore } from "~/store/user.store";
+import { BASE_URL } from "../constants";
 
 import {
     TransitionRoot,
@@ -21,7 +24,23 @@ function openModal() {
     isOpen.value = true;
 }
 
-async function submit() {}
+async function submit() {
+    const formData = new FormData(e.target as HTMLFormElement);
+    let user = useUserStore();
+
+    const data_object = {
+        name: formData.get("name"),
+        image_file: formData.get("image_file"),
+    };
+    const url = BASE_URL + "/post/";
+    const res = await axios.post(url, data_object, {
+        headers: {
+            Authorization: `Bearer ${user.$state.user.access_token}`,
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    console.log("Response", res.data);
+}
 </script>
 
 <template>
