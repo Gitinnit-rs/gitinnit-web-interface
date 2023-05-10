@@ -6,15 +6,20 @@ useHead({
     title: "Dashboard",
 });
 
-/// Fetch all music, users and posts data ///
+/// Fetch all music, albums, users and posts data ///
 
 // Fetch music
 const { data: music, pending, error } = useFetch<Music[]>(BASE_URL + "/music");
+const {
+    data: user,
+    pending: pendingUser,
+    error: errorUser,
+} = useFetch<any[]>(BASE_URL + "/user/*");
 
-console.log("MUSIC DATA", music);
+console.log("USER DATA", user);
 </script>
 <template>
-    <section v-if="error">
+    <section v-if="error || errorUser" class="p-10">
         <div class="alert alert-error shadow-lg">
             <div>
                 <svg
@@ -31,7 +36,8 @@ console.log("MUSIC DATA", music);
                     />
                 </svg>
                 <span>
-                    An error occurred while fetching data<br />{{ error }}
+                    An error occurred while fetching data<br />Music Errors:
+                    {{ error || "None" }}<br />User data Error: {{ errorUser || "None" }}
                 </span>
             </div>
         </div>
