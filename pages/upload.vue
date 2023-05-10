@@ -71,11 +71,16 @@ async function searchUserByName(e: Event | InputEvent) {
 }
 
 async function findArtists(query: string) {
+    let user = useUserStore();
+
     if (query === "") {
         query = "*";
     }
     const result = await getUsersByName(query);
-    artistList.value = result.data;
+    artistList.value = result.data.filter(
+        //@ts-ignore
+        (obj) => obj.id !== user.$state.user.id
+    );
     // Update artistList based on query
 }
 
