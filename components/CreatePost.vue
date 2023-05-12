@@ -15,6 +15,9 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import { Music } from "~/types";
+import { useToast } from "vue-toastification";
+
+const toast = useToast();
 
 const isOpen = ref(false);
 
@@ -28,6 +31,8 @@ function openModal() {
 }
 
 async function submit(e: Event | SubmitEvent) {
+    toast.info("Creating post...", { id: "creation" });
+
     const formData = new FormData(e.target as HTMLFormElement);
     let user = useUserStore();
 
@@ -37,13 +42,23 @@ async function submit(e: Event | SubmitEvent) {
         image_file: formData.get("image_file"),
     };
     const url = BASE_URL + "/post/";
-    const res = await axios.post(url, data_object, {
-        headers: {
-            Authorization: `Bearer ${user.$state.user.access_token}`,
-            "Content-Type": "multipart/form-data",
-        },
-    });
-    console.log("Response", res.data);
+
+    try {
+        const res = await axios.post(url, data_object, {
+            headers: {
+                Authorization: `Bearer ${user.$state.user.access_token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        console.log("Response", res.data);
+
+        toast.dismiss("creation");
+        toast.success("Posted!");
+    } catch (e) {
+        console.error("Error while creating post", e);
+        toast.dismiss("creation");
+        toast.error("Error while creating post");
+    }
 }
 </script>
 
