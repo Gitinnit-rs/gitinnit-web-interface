@@ -32,7 +32,7 @@ onMounted(async () => {
 
 <template>
     <div class="card bg-gray-100">
-        <figure v-if="post.image_url" class="h-50">
+        <figure v-if="post.image_url" class="h-60">
             <img
                 :src="post.image_url"
                 :alt="post.caption"
