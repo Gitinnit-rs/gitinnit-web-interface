@@ -27,6 +27,7 @@ const {
     pending: pendingPosts,
     error: errorPosts,
 } = useFetch<Post[]>(BASE_URL + "/post");
+// } = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=false");
 
 console.log("USER DATA", users);
 console.log("ALBUM DATA", albums);
@@ -62,8 +63,8 @@ console.log("POSTS DATA", posts);
                     Album data Error:
                     {{ errorAlbums || "None" }}
                     <br />
-                    <!-- Posts data Error:
-                    {{ errorPosts || "None" }} -->
+                    Posts data Error:
+                    {{ errorPosts || "None" }}
                 </span>
             </div>
         </div>

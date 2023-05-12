@@ -100,7 +100,7 @@ const {
                                 </div>
 
                                 <div
-                                    class="text-gray-700"
+                                    class="mt-2 text-gray-700"
                                     style="max-height: 400px; overflow-y: auto"
                                 >
                                     <DisplayItem

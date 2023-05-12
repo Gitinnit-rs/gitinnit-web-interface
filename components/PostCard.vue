@@ -85,7 +85,11 @@ onMounted(async () => {
                         </div>
                     </div>
                 </div>
-                <div v-if="user" class="mt-4 flex items-center space-x-3">
+                <div
+                    v-if="user"
+                    class="mt-4 flex items-center space-x-3 cursor-pointer"
+                    @click="navigateTo('/user/' + user.username)"
+                >
                     <img
                         :src="user.profile_photo || FALLBACK_IMAGE_URL"
                         :alt="user.username"
