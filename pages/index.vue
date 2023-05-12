@@ -27,10 +27,6 @@ const {
     pending: pendingPosts,
     error: errorPosts,
 } = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=true");
-
-console.log("USER DATA", users);
-console.log("ALBUM DATA", albums);
-console.log("POSTS DATA", posts);
 </script>
 <template>
     <section

@@ -15,13 +15,18 @@ const { data: music, pending } = useFetch<Music[]>(BASE_URL + "/music", {
     },
 });
 
-watch(pending, () => {
+watch(music, () => {
     console.log("PATCHING WITH NEW MUSIC");
     if (!pending && music.value && music.value[0]) {
         store.$patch({
             activeMusic: music.value[0],
         });
+        console.log("PATCHED");
     }
+});
+
+store.$patch({
+    activeMusic: music.value ? music.value[0] : {},
 });
 
 useHead({
@@ -31,15 +36,7 @@ useHead({
 
 <template>
     <section v-if="pending">Loading...</section>
-    <section
-        v-else-if="music"
-        class="bg-base-200 p-10"
-        :style="{
-            background: `linear-gradient(rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.2) ), url('${music[0].cover_url}')`,
-            backgroundSize: `cover`,
-            backdropFilter: `invert(100px)`,
-        }"
-    >
+    <section v-else-if="music" class="bg-base-200 p-10">
         <div
             class="flex flex-col items-center space-y-5 text-center w-full min-h-screen"
         >
@@ -64,6 +61,14 @@ useHead({
                         </span></span
                     >
                 </p>
+                <div class="mt-2 flex justify-center space-x-1">
+                    <span
+                        class="badge"
+                        v-for="tag in music[0].tags"
+                        :key="tag"
+                        >{{ tag }}</span
+                    >
+                </div>
                 <div
                     class="mr-5 mt-5 flex items-center justify-evenly space-x-4"
                 >
@@ -81,20 +86,8 @@ useHead({
                             }}
                         </p>
                     </div>
-                    <div>
-                        <p class="subtitle">Tags</p>
-                        <div>
-                            <span
-                                class="badge"
-                                v-for="tag in music[0].tags"
-                                :key="tag"
-                                >{{ tag }}</span
-                            >
-                        </div>
-                    </div>
                 </div>
             </div>
-            {{ activeMusic }}
         </div>
     </section>
 </template>

@@ -20,8 +20,6 @@ let user = $ref(null as any);
 // } = useFetch<any[]>(() => BASE_URL + "/user?id=" + $$(post).value.artist_id);
 
 onMounted(async () => {
-    console.log("MOUNTED. POST=", post);
-
     const { data } = await axios.get(
         BASE_URL + "/user?id=" + $$(post).value.artist_id
     );

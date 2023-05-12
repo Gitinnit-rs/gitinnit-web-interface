@@ -36,18 +36,15 @@ onMounted(() => {
 });
 
 watch(activeMusic, () => {
+    console.log("Active music watcher triggered", activeMusic.value);
     loadMusic();
 });
 
 const loadMusic = () => {
-    if (!audioPlayer.value) return;
+    if (!audioPlayer.value || !activeMusic.value) return;
 
-    audioPlayer.value.volume = 1;
-    audioPlayer.value.currentTime = 0;
+    audioPlayer.value.src = activeMusic.value.music_url;
     audioPlayer.value.load();
-    audioPlayer.value.pause();
-
-    totalTime.value = audioPlayer.value.duration.toString();
 };
 
 const play = () => {
@@ -122,6 +119,23 @@ const attachListeners = () => {
     audioPlayer.value.onpause = function () {
         clearInterval(interval.value);
     };
+
+    audioPlayer.value.onload = () => {
+        if (!audioPlayer.value || !activeMusic.value) return;
+
+        audioPlayer.value.volume = 1;
+        audioPlayer.value.currentTime = 0;
+        audioPlayer.value.load();
+        pause();
+
+        totalTime.value = audioPlayer.value.duration.toString();
+
+        console.log(
+            "DURATION",
+            audioPlayer.value.duration,
+            audioPlayer.value.src
+        );
+    };
 };
 
 const seek = (e: MouseEvent) => {
@@ -138,10 +152,7 @@ const seek = (e: MouseEvent) => {
 </script>
 
 <template>
-    <div
-        class="fixed bottom-3 text-white z-50 select-none"
-        style="left: 50%; transform: translateX(-50%)"
-    >
+    <div class="fixed left-[48%] bottom-3 text-white z-50 select-none">
         <transition name="pushup" mode="out-in">
             <div
                 v-if="compact"
@@ -209,7 +220,6 @@ const seek = (e: MouseEvent) => {
         <audio
             v-if="activeMusic"
             ref="audioPlayer"
-            :src="activeMusic.music_url"
             @ended="isPlaying = false"
         />
     </div>
