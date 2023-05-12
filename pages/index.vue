@@ -26,7 +26,7 @@ const {
     data: posts,
     pending: pendingPosts,
     error: errorPosts,
-} = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=true");
+} = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=false");
 </script>
 <template>
     <section
