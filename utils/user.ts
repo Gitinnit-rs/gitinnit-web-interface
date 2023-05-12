@@ -32,14 +32,18 @@ export async function getUserDetails(initial_access_token?: string) {
     //check if user exists in db
     const url = BASE_URL + "/user/?id=" + data.id;
     //get user details from supabase if user exists
-    const { data: user_data, status: user_status } = await axios.get(url);
+    const { data: user_data, status: user_status } = await axios.get(url, {
+        validateStatus(status) {
+            return status < 300 || status === 404;
+        },
+    });
 
-    if (user_status !== 200)
-        throw new Error("Got invalid status code " + status);
+    if (user_status !== 200 && user_status !== 404)
+        throw new Error("Got invalid status code " + user_status);
 
     //create user if it does not exist
     console.log(user_data);
-    if (user_data.length === 0) {
+    if (user_status === 404 || user_data.length === 0) {
         const create_url = BASE_URL + "/user";
         const { data: create_data, status: create_status } = await axios.post(
             create_url,
@@ -49,6 +53,11 @@ export async function getUserDetails(initial_access_token?: string) {
                 username: data.login,
                 bio: data.bio,
                 profile_photo: data.avatar_url,
+            },
+            {
+                headers: {
+                    Authorization: "Bearer " + access_token,
+                },
             }
         );
         if (create_status !== 200)
