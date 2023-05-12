@@ -5,6 +5,10 @@ import { useUserStore } from "~/store/user.store";
 import { storeToRefs } from "pinia";
 import { getUserFollowers, followUser, unfollowUser } from "~/utils/user";
 
+//Icons
+import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
+import MinusIcon from "vue-material-design-icons/MinusCircle.vue";
+
 const route = useRoute("user-username");
 const router = useRouter();
 
@@ -126,40 +130,46 @@ console.log({ music, user });
                         <h1 class="text-4xl font-bold">{{ user[0].name }}</h1>
                         <p class="mt-1">{{ user[0].bio }}</p>
                     </div>
+
+                    <div class="mt-5 flex items-center space-x-3">
+                        <span class="badge"
+                            >Followers &nbsp; {{ followers.length }}</span
+                        >
+                        <div v-if="isLoggedIn">
+                            <button
+                                v-if="!followers.includes(loggedInUserId)"
+                                class="btn btn-xs btn-secondary space-x-1"
+                                @click="
+                                    followUserRef(
+                                        loggedInUserId,
+                                        userId,
+                                        loggedInUserAccessToken
+                                    )
+                                "
+                            >
+                                <PlusIcon class="mb-0.5" />
+                                <span>Follow</span>
+                            </button>
+
+                            <button
+                                v-else
+                                class="btn btn-xs btn-secondary space-x-1"
+                                @click="
+                                    unfollowUserRef(
+                                        loggedInUserId,
+                                        userId,
+                                        loggedInUserAccessToken
+                                    )
+                                "
+                            >
+                                <MinusIcon class="mb-0.5" />
+                                <span>Unfollow</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <section v-if="isLoggedIn">
-            <button
-                v-if="!followers.includes(loggedInUserId)"
-                class="btn btn-primary"
-                @click="
-                    followUserRef(
-                        loggedInUserId,
-                        userId,
-                        loggedInUserAccessToken
-                    )
-                "
-            >
-                Follow User
-            </button>
-
-            <button
-                v-else
-                class="btn btn-primary"
-                @click="
-                    unfollowUserRef(
-                        loggedInUserId,
-                        userId,
-                        loggedInUserAccessToken
-                    )
-                "
-            >
-                Unfollow User
-            </button>
-            <h3>Number of followers {{ followers.length }}</h3>
-        </section>
 
         <div class="p-10">
             <h1 class="text-4xl font-bold">Music</h1>
@@ -182,7 +192,7 @@ console.log({ music, user });
 
             <!-- List of album Items -->
             <div class="mt-6 w-1/2">
-                <p v-if="!music || music.length === 0">No albums yet.</p>
+                <p v-if="!album || album.length === 0">No albums yet.</p>
                 <template v-else>
                     <AlbumItem
                         v-for="item in album"

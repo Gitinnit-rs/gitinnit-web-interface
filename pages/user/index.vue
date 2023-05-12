@@ -87,9 +87,7 @@ onMounted(() => {
     <section v-else-if="user">
         <div class="hero py-10 bg-base-200">
             <div class="hero-content text-center">
-                <div
-                    class="max-w-md flex flex-col items-center"
-                >
+                <div class="max-w-md flex flex-col items-center">
                     <img
                         :src="user[0].profile_photo"
                         class="w-[20rem] h-[20rem] rounded-lg shadow-2xl object-cover"
@@ -99,10 +97,11 @@ onMounted(() => {
                         <h1 class="text-4xl font-bold">{{ user[0].name }}</h1>
                         <p class="mt-1">{{ user[0].bio }}</p>
                     </div>
+
+                    <span class="mt-5 badge">Followers &nbsp; {{ followers.length }}</span>
                 </div>
             </div>
         </div>
-        <h3>Number of followers {{ followers.length }}</h3>
 
         <div class="p-10">
             <h1 class="text-4xl font-bold">Music</h1>

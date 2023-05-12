@@ -34,6 +34,6 @@ const router = useRouter();
             </div>
         </div>
 
-        <div>play</div>
+        <!-- <div>play</div> -->
     </div>
 </template>
