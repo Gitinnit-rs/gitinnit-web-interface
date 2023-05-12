@@ -26,8 +26,7 @@ const {
     data: posts,
     pending: pendingPosts,
     error: errorPosts,
-} = useFetch<Post[]>(BASE_URL + "/post");
-// } = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=false");
+} = useFetch<Post[]>(BASE_URL + "/post?sort=release_date&&ascending=true");
 
 console.log("USER DATA", users);
 console.log("ALBUM DATA", albums);

@@ -31,7 +31,15 @@ useHead({
 
 <template>
     <section v-if="pending">Loading...</section>
-    <section v-else-if="music" class="bg-base-200 p-10">
+    <section
+        v-else-if="music"
+        class="bg-base-200 p-10"
+        :style="{
+            background: `linear-gradient(rgba(255, 255, 255, 1), rgba(0, 0, 0, 0.2) ), url('${music[0].cover_url}')`,
+            backgroundSize: `cover`,
+            backdropFilter: `invert(100px)`,
+        }"
+    >
         <div
             class="flex flex-col items-center space-y-5 text-center w-full min-h-screen"
         >
@@ -49,13 +57,42 @@ useHead({
                     >
                         <NuxtLink
                             :to="'/user/' + artist.username"
-                            class="hover:text-pink-600 cursor-pointer transition"
+                            class="text-gray-700 hover:text-pink-600 cursor-pointer transition"
                             >{{ artist.name }}</NuxtLink
                         ><span v-if="i !== music[0].artists.length - 1"
                             >,
                         </span></span
                     >
                 </p>
+                <div
+                    class="mr-5 mt-5 flex items-center justify-evenly space-x-4"
+                >
+                    <div>
+                        <p class="subtitle">Released on</p>
+                        <p>
+                            {{ new Date(music[0].release_date).toDateString() }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="subtitle">Genre</p>
+                        <p class="uppercase">
+                            {{
+                                music[0].genre || music[0].tags[0] || "Not Set"
+                            }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="subtitle">Tags</p>
+                        <div>
+                            <span
+                                class="badge"
+                                v-for="tag in music[0].tags"
+                                :key="tag"
+                                >{{ tag }}</span
+                            >
+                        </div>
+                    </div>
+                </div>
             </div>
             {{ activeMusic }}
         </div>

@@ -18,6 +18,10 @@ useHead({
 <style>
 @import url("@/assets/style.css");
 
+.subtitle {
+    @apply uppercase tracking-widest text-xs text-gray-500;
+}
+
 .responsive-grid {
     @apply gap-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5;
 }

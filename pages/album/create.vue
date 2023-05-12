@@ -10,10 +10,17 @@ import MinusIcon from "vue-material-design-icons/MinusCircle.vue";
 import PlusIcon from "vue-material-design-icons/PlusCircle.vue";
 
 import { BASE_URL } from "~/constants";
+import { storeToRefs } from "pinia";
+
+import { useToast } from "vue-toastification";
 
 useHead({
     title: "New Album",
 });
+
+const { user } = storeToRefs(useUserStore());
+
+const toast = useToast();
 
 const previewURL = ref("");
 const previewImage = ref(null as HTMLImageElement | null);
@@ -31,25 +38,35 @@ onMounted(() => {
 });
 
 async function submit(e: Event | SubmitEvent) {
-    let user = useUserStore();
-    const formData = new FormData(e.target as HTMLFormElement);
-    let musics = selectedMusicList.value.map((music) => {
-        return music.id;
-    });
+    toast.info("Creating Album...", { id: "info", timeout: 7000 });
 
-    const data_object = {
-        name: formData.get("name"),
-        image_file: formData.get("image_file"),
-        musics: musics,
-    };
-    const url = BASE_URL + "/music/album/";
-    const res = await axios.post(url, data_object, {
-        headers: {
-            Authorization: `Bearer ${user.$state.user.access_token}`,
-            "Content-Type": "multipart/form-data",
-        },
-    });
-    console.log("Response", res.data);
+    try {
+        const user = useUserStore();
+        const formData = new FormData(e.target as HTMLFormElement);
+        let musics = selectedMusicList.value.map((music) => {
+            return music.id;
+        });
+
+        const data_object = {
+            name: formData.get("name"),
+            image_file: formData.get("image_file"),
+            musics: musics,
+        };
+        const url = BASE_URL + "/music/album/";
+        const res = await axios.post(url, data_object, {
+            headers: {
+                Authorization: `Bearer ${user.$state.user.access_token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        console.log("Response", res.data);
+        toast.dismiss("info");
+        toast.success("Album created!");
+    } catch (e) {
+        console.error("Error while creating album", e);
+        toast.dismiss("info");
+        toast.error("Unable to create album");
+    }
 }
 
 // const findMusic = useDebounceFn(async () => {}, 100);
@@ -194,7 +211,7 @@ function removeFromList(music: any) {
                     <h1 class="font-semibold">{{ name || "Album Name" }}</h1>
 
                     <!-- Logged-In User's Name here -->
-                    <p class="text-xs text-gray-500">Martin Garrix</p>
+                    <p class="text-xs text-gray-500">{{ user.name }}</p>
                 </div>
             </div>
 
