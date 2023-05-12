@@ -77,16 +77,46 @@ console.log("ALBUM DATA", albums);
         </section>
 
         <section class="bg-base-100 p-10 rounded-t-4xl">
+            <!-- Music -->
             <h1 class="uppercase tracking-widest text-xs text-gray-500">
                 Latest releases
             </h1>
             <div class="-ml-3">
-                <div
-                    class="responsive-grid"
-                >
+                <div class="responsive-grid">
                     <template v-for="item in music" :key="item.id">
                         <NuxtLink :to="'/music/' + item.id">
-                            <DisplayItem :item="item" :hoverable="true"> </DisplayItem>
+                            <DisplayItem :item="item" :hoverable="true">
+                            </DisplayItem>
+                        </NuxtLink>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Albums -->
+            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
+                Latest Albums
+            </h1>
+            <div class="-ml-3">
+                <div class="responsive-grid">
+                    <template v-for="item in albums" :key="item.id">
+                        <NuxtLink :to="'/album/' + item.id">
+                            <DisplayItem :item="item" :hoverable="true">
+                            </DisplayItem>
+                        </NuxtLink>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
+                Top Artists
+            </h1>
+            <div class="-ml-3">
+                <div class="responsive-grid">
+                    <template v-for="item in users" :key="item.id">
+                        <NuxtLink :to="'/user/' + item.username">
+                            <DisplayItem :item="item" :hoverable="true">
+                            </DisplayItem>
                         </NuxtLink>
                     </template>
                 </div>
