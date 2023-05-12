@@ -87,63 +87,73 @@ const {
             </div>
         </section>
 
-        <section class="bg-base-100 p-10 rounded-t-4xl">
-            <!-- Music -->
-            <h1 class="uppercase tracking-widest text-xs text-gray-500">
-                Latest releases
-            </h1>
-            <div class="-ml-3">
-                <div class="responsive-grid">
-                    <template v-for="item in music" :key="item.id">
-                        <NuxtLink :to="'/music/' + item.id">
-                            <DisplayItem :item="item" :hoverable="true">
-                            </DisplayItem>
-                        </NuxtLink>
-                    </template>
+        <section
+            class="bg-base-100 p-10 rounded-t-4xl md:(grid grid-cols-3 gap-10)"
+        >
+            <div>
+                <!-- Music -->
+                <h1 class="uppercase tracking-widest text-xs text-gray-500">
+                    Latest releases
+                </h1>
+                <div class="-ml-3">
+                    <div class="">
+                        <template v-for="item in music" :key="item.id">
+                            <NuxtLink :to="'/music/' + item.id">
+                                <DisplayItem :item="item" :hoverable="true">
+                                </DisplayItem>
+                            </NuxtLink>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- Albums -->
+                <h1
+                    class="mt-5 uppercase tracking-widest text-xs text-gray-500"
+                >
+                    Latest Albums
+                </h1>
+                <div class="-ml-3">
+                    <div class="">
+                        <template v-for="item in albums" :key="item.id">
+                            <NuxtLink :to="'/album/' + item.id">
+                                <DisplayItem :item="item" :hoverable="true">
+                                </DisplayItem>
+                            </NuxtLink>
+                        </template>
+                    </div>
                 </div>
             </div>
-
-            <!-- Albums -->
-            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
-                Latest Albums
-            </h1>
-            <div class="-ml-3">
-                <div class="responsive-grid">
-                    <template v-for="item in albums" :key="item.id">
-                        <NuxtLink :to="'/album/' + item.id">
-                            <DisplayItem :item="item" :hoverable="true">
-                            </DisplayItem>
-                        </NuxtLink>
-                    </template>
+            <div>
+                <!-- Posts -->
+                <h1
+                    class="uppercase tracking-widest text-xs text-gray-500"
+                >
+                    Latest Posts
+                </h1>
+                <div class="-ml-3">
+                    <div class="space-y-5 mt-4">
+                        <PostCard
+                            v-for="post in posts"
+                            :key="post.id"
+                            :post="post"
+                        />
+                    </div>
                 </div>
             </div>
-
-            <!-- Artists -->
-            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
-                Top Artists
-            </h1>
-            <div class="-ml-3">
-                <div class="responsive-grid">
-                    <template v-for="item in users" :key="item.id">
-                        <NuxtLink :to="'/user/' + item.username">
-                            <DisplayItem :item="item" :hoverable="true">
-                            </DisplayItem>
-                        </NuxtLink>
-                    </template>
-                </div>
-            </div>
-
-            <!-- Posts -->
-            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
-                Latest Posts
-            </h1>
-            <div class="-ml-3">
-                <div class="responsive-grid-large mt-4">
-                    <PostCard
-                        v-for="post in posts"
-                        :key="post.id"
-                        :post="post"
-                    />
+            <div>
+                <!-- Artists -->
+                <h1 class="uppercase tracking-widest text-xs text-gray-500">
+                    Top Artists
+                </h1>
+                <div class="-ml-3">
+                    <div class="">
+                        <template v-for="item in users" :key="item.id">
+                            <NuxtLink :to="'/user/' + item.username">
+                                <DisplayItem :item="item" :hoverable="true">
+                                </DisplayItem>
+                            </NuxtLink>
+                        </template>
+                    </div>
                 </div>
             </div>
         </section>
