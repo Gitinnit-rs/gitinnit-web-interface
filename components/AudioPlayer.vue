@@ -36,7 +36,6 @@ onMounted(() => {
 });
 
 watch(activeMusic, () => {
-    console.log("Active music watcher triggered", activeMusic.value);
     loadMusic();
 });
 
@@ -129,12 +128,6 @@ const attachListeners = () => {
         pause();
 
         totalTime.value = audioPlayer.value.duration.toString();
-
-        console.log(
-            "DURATION",
-            audioPlayer.value.duration,
-            audioPlayer.value.src
-        );
     };
 };
 
