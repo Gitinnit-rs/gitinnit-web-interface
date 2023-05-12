@@ -14,8 +14,11 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
+import { Music } from "~/types";
 
 const isOpen = ref(false);
+
+const selectedMusic = ref(null as Music | null);
 
 function closeModal() {
     isOpen.value = false;
@@ -118,6 +121,20 @@ async function submit(e: Event | SubmitEvent) {
                                             class="file-input file-input-sm file-input-bordered w-full max-w-xs"
                                             accept="image/*"
                                         />
+                                    </div>
+
+                                    <div class="mt-2 form-control max-w-xs">
+                                        <label class="label" for="image_file">
+                                            <span class="label-text"
+                                                >Music (Optional)</span
+                                            >
+                                        </label>
+                                        <MusicList v-model="selectedMusic" />
+                                        <DisplayItem
+                                            v-if="selectedMusic"
+                                            :item="selectedMusic"
+                                            class="text-gray-700"
+                                        ></DisplayItem>
                                     </div>
                                 </div>
 
