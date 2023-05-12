@@ -41,6 +41,11 @@ async function submit(e: Event | SubmitEvent) {
         type: "text",
         image_file: formData.get("image_file"),
     };
+    if (selectedMusic) {
+        data_object.type = "music";
+        //@ts-ignore
+        data_object.content_id = selectedMusic.value?.id;
+    }
     const url = BASE_URL + "/post/";
 
     try {
