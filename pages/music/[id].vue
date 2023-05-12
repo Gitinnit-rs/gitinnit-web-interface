@@ -5,11 +5,14 @@ import { useStore } from "~/store";
 import { Music } from "~/types";
 
 const store = useStore();
-const { activeMusic } = storeToRefs(store);
 const route = useRoute("music-id");
 const id = route.params.id;
 
-const { data: music, pending } = useFetch<Music[]>(BASE_URL + "/music", {
+const {
+    data: music,
+    pending,
+    error,
+} = useFetch<Music[]>(BASE_URL + "/music", {
     query: {
         id,
     },
@@ -36,9 +39,32 @@ useHead({
 
 <template>
     <section v-if="pending">Loading...</section>
-    <section v-else-if="music" class="bg-base-200 p-10">
+    <section v-else-if="error">
+        <div class="alert alert-error shadow-lg">
+            <div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="stroke-current flex-shrink-0 h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                </svg>
+                <span>
+                    An error occurred while fetching music data<br />
+                    {{ error || "None" }}
+                </span>
+            </div>
+        </div>
+    </section>
+    <section v-else-if="music && music[0]" class="bg-base-200 p-10">
         <div
-            class="flex flex-col items-center space-y-5 text-center w-full min-h-screen"
+            class="mt-20 flex flex-col items-center space-y-5 text-center w-full min-h-screen"
         >
             <img
                 :src="music[0].cover_url || FALLBACK_IMAGE_URL"
@@ -90,4 +116,5 @@ useHead({
             </div>
         </div>
     </section>
+    <section v-else>No data found</section>
 </template>
