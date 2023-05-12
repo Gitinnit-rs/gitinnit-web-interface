@@ -22,11 +22,18 @@ const {
     error: errorAlbums,
 } = useFetch<any[]>(BASE_URL + "/music/album");
 
+// const {
+//     data: posts,
+//     pending: pendingPosts,
+//     error: errorPosts,
+// } = useFetch<any[]>(BASE_URL + "/post");
+
 console.log("USER DATA", users);
 console.log("ALBUM DATA", albums);
 </script>
 <template>
-    <section v-if="error || errorUsers" class="p-10">
+    <!-- v-if="error || errorUsers || errorAlbums || errorPosts" -->
+    <section v-if="error || errorUsers || errorAlbums" class="p-10">
         <div class="alert alert-error shadow-lg">
             <div>
                 <svg
@@ -51,10 +58,14 @@ console.log("ALBUM DATA", albums);
                     <br />
                     Album data Error:
                     {{ errorAlbums || "None" }}
+                    <br />
+                    <!-- Posts data Error:
+                    {{ errorPosts || "None" }} -->
                 </span>
             </div>
         </div>
     </section>
+    <!-- v-else-if="pending || pendingUsers || pendingAlbums || pendingPosts" -->
     <section v-else-if="pending || pendingUsers || pendingAlbums">
         Loading...
     </section>
@@ -107,7 +118,7 @@ console.log("ALBUM DATA", albums);
                 </div>
             </div>
 
-            <!-- Posts -->
+            <!-- Artists -->
             <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
                 Top Artists
             </h1>
@@ -119,6 +130,16 @@ console.log("ALBUM DATA", albums);
                             </DisplayItem>
                         </NuxtLink>
                     </template>
+                </div>
+            </div>
+
+            <!-- Posts -->
+            <h1 class="mt-5 uppercase tracking-widest text-xs text-gray-500">
+                Latest Posts
+            </h1>
+            <div class="-ml-3">
+                <div class="responsive-grid">
+                    {{ posts }}
                 </div>
             </div>
         </section>

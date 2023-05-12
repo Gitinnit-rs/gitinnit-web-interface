@@ -14,5 +14,7 @@ export default defineNuxtConfig({
         "@pinia-plugin-persistedstate/nuxt",
         "@vue-macros/nuxt",
         "nuxt-typed-router",
+        '@vueuse/nuxt',
     ],
+    plugins: [{ mode: "client", src: "@/plugins/toast.ts" }],
 });

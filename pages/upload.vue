@@ -10,9 +10,13 @@ import axios from "axios";
 
 import { BASE_URL } from "../constants";
 
+import { useToast } from "vue-toastification";
+
 useHead({
     title: "Upload",
 });
+
+const toast = useToast();
 
 const previewURL = ref("");
 const previewImage = ref(null as HTMLImageElement | null);
@@ -22,7 +26,7 @@ const selectedArtistsList = ref([]);
 
 const data = reactive({
     tags: [] as string[],
-    public: true, // should use "private" ideally
+    // public: true, // should use "private" ideally
 });
 
 onMounted(() => {
@@ -30,6 +34,8 @@ onMounted(() => {
 });
 
 async function submit(e: Event | SubmitEvent) {
+    toast.info("Starting upload", { timeout: 6000 });
+
     const formData = new FormData(e.target as HTMLFormElement);
     let user = useUserStore();
 
@@ -54,21 +60,32 @@ async function submit(e: Event | SubmitEvent) {
     });
     console.log("Response", res.data);
 
-    // Note: Full data is FormData + data reactive object
+    if (res.status === 200) {
+        toast.success("Your music is live! Click to open", {
+            timeout: 6000,
+            pauseOnHover: true,
+            onClick(closeToast) {
+                navigateTo(`/music/${res.data.id}`);
+                closeToast();
+            },
+        });
+    } else {
+        toast.error("An error occurred");
+    }
 }
 
 function onImageChange(e: any) {
     animateImageChange(e, previewURL, previewImage);
 }
 
-async function searchUserByName(e: Event | InputEvent) {
-    const name = (e.target as HTMLInputElement).value;
+// async function searchUserByName(e: Event | InputEvent) {
+//     const name = (e.target as HTMLInputElement).value;
 
-    if (!name) return;
+//     if (!name) return;
 
-    const result = await getUsersByName(name);
-    if (result) console.log("User search by name results", result.data);
-}
+//     const result = await getUsersByName(name);
+//     if (result) console.log("User search by name results", result.data);
+// }
 
 async function findArtists(query: string) {
     let user = useUserStore();
@@ -188,7 +205,7 @@ function handleChangeTag(tags: string[]) {
                 />
             </div>
 
-            <div class="form-control w-30 mt-5">
+            <!-- <div class="form-control w-30 mt-5">
                 <label class="cursor-pointer label">
                     <span class="label-text">Public</span>
                     <input
@@ -197,7 +214,7 @@ function handleChangeTag(tags: string[]) {
                         class="h-4 w-4 cursor-pointer"
                     />
                 </label>
-            </div>
+            </div> -->
 
             <button type="submit" class="btn btn-secondary">
                 Create Music
