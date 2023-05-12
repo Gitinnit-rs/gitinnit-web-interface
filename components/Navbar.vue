@@ -52,14 +52,13 @@ onMounted(() => {
         </div>
         <div class="flex-none gap-2">
             <NuxtLink
-                v-if="isLoggedIn"
                 to="/upload"
                 role="button"
                 class="btn btn-sm btn-secondary space-x-1"
             >
                 <PlusIcon class="mb-1" /> <span>Music</span>
             </NuxtLink>
-            <CreatePost v-if="isLoggedIn" />
+            <CreatePost />
             <div class="form-control">
                 <input
                     type="text"
