@@ -59,14 +59,13 @@ useHead({
             />
             <div>
                 <h1 class="text-4xl font-bold">{{ album[0].name }}</h1>
-                <p class="mt-2 text-gray-500">{{ new Date(album[0].release_date).toDateString() }}</p>
-                <!-- <p class="mt-1">
-                    <NuxtLink
-                        :to="'/user/' + album[0]."
-                        class="text-gray-700 hover:text-pink-600 cursor-pointer transition"
-                        >{{ artist.name }}</NuxtLink
-                    >
-                </p> -->
+                <p class="mt-2 text-gray-500">
+                    {{ new Date(album[0].release_date).toDateString() }}
+                </p>
+                
+                <div class="mt-8 text-left">
+                    <MusicItem v-for="item in album[0].music" :key="item.id" :music="item" />
+                </div>
             </div>
         </div>
     </section>

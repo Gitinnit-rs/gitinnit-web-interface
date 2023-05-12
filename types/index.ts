@@ -19,6 +19,8 @@ export interface Album {
     release_date: string;
     cover_url: string;
     artist_id: string;
+
+    music?: Music[];
 }
 
 export interface Artist {

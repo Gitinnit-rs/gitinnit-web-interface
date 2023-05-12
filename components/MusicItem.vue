@@ -23,10 +23,8 @@ const router = useRouter();
                 <h1 class="text-3xl font-bold">{{ music.name }}</h1>
                 <p>
                     <span v-for="(artist, i) in music.artists" :key="artist.id">
-                        <NuxtLink
-                            :to="'/user/' + artist.username"
-                            class="hover:text-pink-600 cursor-pointer transition"
-                            >{{ artist.name }}</NuxtLink
+                        <!-- :to="'/user/' + artist.username" -->
+                        <span>{{ artist.name }}</span
                         ><span v-if="i !== music.artists.length - 1"
                             >,
                         </span></span
