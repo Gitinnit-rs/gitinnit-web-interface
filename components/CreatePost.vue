@@ -130,12 +130,20 @@ async function submit(e: Event | SubmitEvent) {
                                             >
                                         </label>
                                         <MusicList v-model="selectedMusic" />
-                                        <DisplayItem
-                                            v-if="selectedMusic"
-                                            :item="selectedMusic"
-                                            class="text-gray-700"
-                                        ></DisplayItem>
                                     </div>
+                                    <DisplayItem
+                                        v-if="selectedMusic"
+                                        :item="selectedMusic"
+                                        class="text-gray-700 mt-2"
+                                    >
+                                        <template #actions>
+                                            <span
+                                                class="text-xs text-red-500 hover:underline cursor-pointer"
+                                                @click="selectedMusic = null"
+                                                >Remove</span
+                                            >
+                                        </template>
+                                    </DisplayItem>
                                 </div>
 
                                 <div class="mt-4">
