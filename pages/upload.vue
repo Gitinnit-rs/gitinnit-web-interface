@@ -50,6 +50,7 @@ async function submit(e: Event | SubmitEvent) {
         tags: data.tags,
         music_file: formData.get("music_file"),
         image_file: formData.get("image_file"),
+        genre: [formData.get("genre")],
     };
     const url = BASE_URL + "/music/";
     const res = await axios.post(url, data_object, {
@@ -130,22 +131,21 @@ function handleChangeTag(tags: string[]) {
                         />
                     </label>
                 </div>
-                <!-- <div class="form-control">
-                    <label class="label" for="artists">
-                        <span class="label-text">Artists</span>
+                <div class="form-control">
+                    <label class="label" for="genre">
+                        <span class="label-text">Genre</span>
                     </label>
                     <label class="input-group">
-                        <span>Artists</span>
+                        <span>Genre</span>
                         <input
                             type="text"
-                            id="artists"
-                            name="artists"
-                            placeholder="Darude, Drake"
+                            id="genre"
+                            name="genre"
+                            placeholder="Pop"
                             class="input input-bordered"
-                            @input="searchUserByName"
                         />
                     </label>
-                </div> -->
+                </div>
             </div>
 
             <div class="w-1/2 form-control">

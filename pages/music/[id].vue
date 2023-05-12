@@ -108,7 +108,7 @@ useHead({
                         <p class="subtitle">Genre</p>
                         <p class="uppercase">
                             {{
-                                music[0].genre || music[0].tags[0] || "Not Set"
+                                music[0].genre[0] || music[0].tags[0] || "Not Set"
                             }}
                         </p>
                     </div>
