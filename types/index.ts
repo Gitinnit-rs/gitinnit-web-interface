@@ -26,3 +26,28 @@ export interface Artist {
     name: string;
     username: string;
 }
+
+export interface Post {
+    id: string;
+    likes_count: number;
+    comment_count: number;
+    type: string;
+    tags: string[];
+    caption: string;
+    artist_id: number;
+    image_url: any;
+    release_date: any;
+    media?: Media;
+}
+
+export interface Media {
+    id: string;
+    name: string;
+    release_date: string;
+    music_url: string;
+    artist_id: number;
+    tags: any;
+    genre: any;
+    cover_url: any;
+    artists: any[];
+}

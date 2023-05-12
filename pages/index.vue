@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { BASE_URL } from "~/constants";
-import { Music } from "~/types";
+import { Music, Post } from "~/types";
 
 useHead({
     title: "Dashboard",
@@ -22,18 +22,21 @@ const {
     error: errorAlbums,
 } = useFetch<any[]>(BASE_URL + "/music/album");
 
-// const {
-//     data: posts,
-//     pending: pendingPosts,
-//     error: errorPosts,
-// } = useFetch<any[]>(BASE_URL + "/post");
+const {
+    data: posts,
+    pending: pendingPosts,
+    error: errorPosts,
+} = useFetch<Post[]>(BASE_URL + "/post");
 
 console.log("USER DATA", users);
 console.log("ALBUM DATA", albums);
+console.log("POSTS DATA", posts);
 </script>
 <template>
-    <!-- v-if="error || errorUsers || errorAlbums || errorPosts" -->
-    <section v-if="error || errorUsers || errorAlbums" class="p-10">
+    <section
+        v-if="error || errorUsers || errorAlbums || errorPosts"
+        class="p-10"
+    >
         <div class="alert alert-error shadow-lg">
             <div>
                 <svg
@@ -65,8 +68,9 @@ console.log("ALBUM DATA", albums);
             </div>
         </div>
     </section>
-    <!-- v-else-if="pending || pendingUsers || pendingAlbums || pendingPosts" -->
-    <section v-else-if="pending || pendingUsers || pendingAlbums">
+    <section
+        v-else-if="pending || pendingUsers || pendingAlbums || pendingPosts"
+    >
         Loading...
     </section>
     <div v-else class="bg-base-300">
@@ -138,8 +142,12 @@ console.log("ALBUM DATA", albums);
                 Latest Posts
             </h1>
             <div class="-ml-3">
-                <div class="responsive-grid">
-                    {{ posts }}
+                <div class="responsive-grid-large mt-4">
+                    <PostCard
+                        v-for="post in posts"
+                        :key="post.id"
+                        :post="post"
+                    />
                 </div>
             </div>
         </section>
