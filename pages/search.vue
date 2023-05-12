@@ -32,8 +32,7 @@ console.log("Search data", data);
 </script>
 
 <template>
-    <section v-if="pending">Loading...</section>
-    <section v-else-if="error" class="p-10">
+    <section v-if="error" class="p-10">
         <div class="alert alert-error shadow-lg">
             <div>
                 <svg
@@ -63,7 +62,8 @@ console.log("Search data", data);
             <h1 class="text-4xl font-bold">{{ query }}</h1>
         </section>
 
-        <section v-if="data?.length === 0" class="p-10">
+        <section v-if="pending" class="p-10">Loading...</section>
+        <section v-else-if="data?.length === 0" class="p-10">
             No results found
         </section>
         <section v-else class="p-10 space-y-5">
