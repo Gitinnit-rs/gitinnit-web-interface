@@ -80,9 +80,11 @@ const {
                 <div>
                     <h1 class="text-5xl font-bold">New Releases</h1>
                     <p class="py-6">
-                        Listen to the Top 10 new releases on Gitinnit
+                        Take part by adding your own music!
                     </p>
-                    <button class="btn btn-primary">Get Started</button>
+                    <NuxtLink to="/upload">
+                        <button class="btn btn-primary">Upload your own</button>
+                    </NuxtLink>
                 </div>
             </div>
         </section>
@@ -125,9 +127,7 @@ const {
             </div>
             <div>
                 <!-- Posts -->
-                <h1
-                    class="uppercase tracking-widest text-xs text-gray-500"
-                >
+                <h1 class="uppercase tracking-widest text-xs text-gray-500">
                     Latest Posts
                 </h1>
                 <div class="-ml-3">
