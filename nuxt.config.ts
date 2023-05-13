@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
     devServer: {
-        port: 4200,
+        port: 4000,
     },
     app: {
         head: {

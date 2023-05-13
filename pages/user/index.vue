@@ -29,8 +29,11 @@ const {
 // let user_data=null
 
 watch(user, async () => {
-    if (loggedInUser.value && user.value) {
-        followers.value = await getUserFollowers((user.value as any[])[0].id);
+    if (user.value) {
+        // followers.value = await getUserFollowers((user.value as any[])[0].id);
+        followers.value = user.value[0].follower_count;
+        following.value = user.value[0].following_count;
+        console.log("USER", user.value[0]);
     }
 });
 
@@ -40,9 +43,9 @@ const music = computed(
 const album = computed(
     () => user.value && ((user.value as any[])[0].album as Album[])
 );
-const followers = ref([]);
+const followers = ref(0);
+const following = ref(0);
 // followers.value = await getUserFollowers((user.value as any[])[0].id);
-console.log(followers.value.length);
 
 //print all key value pairs of album[0]
 // for (const [key, value] of Object.entries(album.value[0])) {
@@ -97,8 +100,14 @@ onMounted(() => {
                         <h1 class="text-4xl font-bold">{{ user[0].name }}</h1>
                         <p class="mt-1">{{ user[0].bio }}</p>
                     </div>
-
-                    <span class="mt-5 badge">Followers &nbsp; {{ followers.length }}</span>
+                    <div class="flex space-x-2">
+                        <span class="mt-5 badge"
+                            >Followers &nbsp; {{ followers }}</span
+                        >
+                        <span class="mt-5 badge"
+                            >Following &nbsp; {{ following }}</span
+                        >
+                    </div>
                 </div>
             </div>
         </div>
